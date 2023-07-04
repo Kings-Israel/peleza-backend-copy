@@ -5,9 +5,8 @@ import debug_toolbar
 from django.contrib import admin
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/", include("main.urls")),
-    path("api/auth/", include("authentication.urls")),
-    path("__debug__/", include(debug_toolbar.urls)),
-    # path("peleza-backend-server/api/companies/", views.CompaniesList.as_view()),
+    path("peleza-backend-server/admin/", admin.site.urls),
+    path("peleza-backend-server/api/", include("main.urls")),
+    path("peleza-backend-server/api/auth/", include("authentication.urls")),
+    path("peleza-backend-server/__debug__/", include(debug_toolbar.urls)),
 ]
