@@ -27,7 +27,6 @@ urlpatterns = [
         views.Test.as_view(),
     ),
 
-    
     path(
         "fileUp/",
         views.simple_upload

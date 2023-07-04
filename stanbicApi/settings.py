@@ -19,7 +19,7 @@ ALL_API_PACKAGES = list(set(EXTERNAL_API_PACKAGES + [35, 36, 38, 39, 33]))
 
 DEBUG = False
 # <<<<<<< HEAD
-ALLOWED_HOSTS = ["kyc.pidva.africa","localhost", "localhost:3001", "192.168.*", "pidva.africa", "localhost:3000", "127.0.0.1","stanbic.pidva.africa", "172.105.95.169"]
+ALLOWED_HOSTS = ["0.0.0.0", "kyc.pidva.africa","localhost", "localhost:3001", "192.168.*", "pidva.africa", "localhost:3000", "127.0.0.1","stanbic.pidva.africa", "172.105.95.169"]
 # >>>>>>> 8af93b58f147af44c8cf5c007f007711ab1c379b
 
 AUTH_USER_MODEL = "authentication.PelClient"
@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "import_export",
     "django_extensions",
 ]
-INTERNAL_IPS = ["127.0.0.1", "localhost", "192.168.1.210", "172.105.95.169"]
+INTERNAL_IPS = ["0.0.0.0", "127.0.0.1", "localhost", "192.168.1.210", "172.105.95.169"]
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
