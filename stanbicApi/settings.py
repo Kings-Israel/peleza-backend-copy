@@ -17,7 +17,7 @@ SECRET_KEY = config('SECRET_KEY')
 EXTERNAL_API_PACKAGES = [34, 40, 31, 37, 41]
 ALL_API_PACKAGES = list(set(EXTERNAL_API_PACKAGES + [35, 36, 38, 39, 33]))
 
-DEBUG = True
+DEBUG = False
 # <<<<<<< HEAD
 ALLOWED_HOSTS = ["kyc.pidva.africa","localhost", "localhost:3001", "192.168.*", "pidva.africa", "localhost:3000", "127.0.0.1","stanbic.pidva.africa", "172.105.95.169"]
 # >>>>>>> 8af93b58f147af44c8cf5c007f007711ab1c379b
