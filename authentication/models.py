@@ -1,7 +1,8 @@
 from django.db import models
 import random, string, base64, hashlib, threading
-
+from django.utils import timezone
 from django.db.models import query
+from hashlib import md5
 
 # Create your models here.
 class ClientCompany(models.Model):
@@ -21,7 +22,7 @@ class ClientCompany(models.Model):
     company_credit = models.CharField(max_length=255, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "pel_client_co"
 
 
@@ -34,7 +35,7 @@ class PelClient(models.Model):
     client_password = models.CharField(max_length=255, blank=False, null=False)
     status = models.CharField(max_length=10, null=True, blank=True)
     # client_parent_company = models.CharField(max_length=255)
-    company = models.ForeignKey(
+    client_parent_company = models.ForeignKey(
         "authentication.ClientCompany",
         models.CASCADE,
         related_name="company",
@@ -76,7 +77,7 @@ class PelClient(models.Model):
 
     class Meta:
         db_table = "pel_client"
-        managed = False
+        managed = True
 
     @classmethod
     def login(cls, client_id=None, username=None, password="", **kwargs):
@@ -108,7 +109,37 @@ class PelClient(models.Model):
                 thread.start()
 
             return user
+    @classmethod
+    def register(cls, first_name, last_name, email, mobile_number, password, city, company_id, company):
+        user = None
+        client_company = ClientCompany.objects.get(company_id=company_id)
+        user = cls.objects.create(
+            client_company_id=company,
+            client_login_username=email,
+            client_password=md5(base64.b64decode(str(password).encode("ascii"))).hexdigest(),
+            client_first_name=first_name,
+            client_last_name=last_name,
+            client_mobile_number=mobile_number,
+            client_postal_address='8817',
+            client_postal_code='00100',
+            client_city=city,
+            client_parent_company=client_company,
+            # client_email_address=email,
+            # client_country=country,
+            # client_industry=client_industry,
+            # client_type=account_type,
+            # added_date=timezone.now(),
+            # added_by=email
+        )
 
+        if user:
+                token = cls.generate_token()
+                user.client_pin = token
+                thread = threading.Thread(target=user.save)
+                thread.start()
+
+        return user
+    
     @classmethod
     def generate_token(cls):
         strings = "%s%s%s" % (string.ascii_letters, string.digits, string.punctuation)

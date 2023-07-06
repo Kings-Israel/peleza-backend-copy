@@ -17,7 +17,7 @@ SECRET_KEY = config('SECRET_KEY')
 EXTERNAL_API_PACKAGES = [34, 40, 31, 37, 41]
 ALL_API_PACKAGES = list(set(EXTERNAL_API_PACKAGES + [35, 36, 38, 39, 33]))
 
-DEBUG = False
+DEBUG = True
 # <<<<<<< HEAD
 ALLOWED_HOSTS = ["0.0.0.0", "kyc.pidva.africa","localhost", "localhost:3001", "192.168.*", "pidva.africa", "localhost:3000", "127.0.0.1","stanbic.pidva.africa", "172.105.95.169"]
 # >>>>>>> 8af93b58f147af44c8cf5c007f007711ab1c379b
@@ -92,19 +92,19 @@ WSGI_APPLICATION = "stanbicApi.wsgi.application"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.db.backends.mysql",
-    #     "NAME": config("DB_NAME", "peleza_db_local"),
-    #     "USER": config("DB_USER", "root"),
-    #     "PASSWORD": config("DB_PASSWORD", "secretpassword"),
-    #     "PORT": config("DB_PORT", 3306),
-    #     "HOST": config("DB_HOST", "localhost"),
-    #     "OPTIONS": {
-    #         "init_command": "SET GLOBAL max_connections = 100000; ALTER DATABASE peleza_db_local CHARACTER SET utf8 "
-    #                         "COLLATE utf8_general_ci;",
-    #     },
-    # }
     "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": config("DB_NAME", "peleza_db_local"),
+        "USER": config("DB_USER", "root"),
+        "PASSWORD": config("DB_PASSWORD", "secretpassword"),
+        "PORT": config("DB_PORT", 3306),
+        "HOST": config("DB_HOST", "localhost"),
+        "OPTIONS": {
+            "init_command": "SET GLOBAL max_connections = 100000; ALTER DATABASE peleza CHARACTER SET utf8"
+                            "COLLATE utf8_general_ci;",
+        },
+    },
+    "remote": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": config("DB_NAME", "peleza_db_local"),
         "USER": config("DB_USER", "root"),
