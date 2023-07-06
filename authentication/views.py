@@ -19,16 +19,13 @@ class Login(generics.CreateAPIView):
         if not user:
             raise exceptions.AuthenticationFailed()
         company_querry ="SELECT company_logo ,company_industry FROM peleza_db_local.pel_client_co where company_code='"+user.client_company_id +"'"
-        #print(company_querry)   
         client_co = querry.custom_sql(company_querry)
-        #print(client_co[0])
         data = {
             "access": user.token,
             "username": user.client_login_username,
             "cl_id": user.client_id ,
             "company_id": user.client_company_id,
-            "company_id": user.client_company_id,
-            "first_name": user.client_first_name ,
+            "first_name": user.client_first_name,
             "company_logo": client_co[0][0],
             "company_industry": client_co[0][1]
             if user.client_first_name
@@ -45,6 +42,35 @@ class Login(generics.CreateAPIView):
         if not instance.is_valid():
             raise serializers.ValidationError(instance.errors)
 
+class Register(generics.CreateAPIView):
+    serializer_class = AuthSerializer
+    authentication_classes = []
+    permission_classes = []
+
+    def post(self, request, *args, **kwargs):
+        user = PelClient.register(**request.data)
+
+        if not user:
+            raise exceptions.AuthenticationFailed()
+        company_querry ="SELECT company_logo ,company_industry FROM peleza_db_local.pel_client_co where company_code='"+user.client_company_id +"'"
+        client_co = querry.custom_sql(company_querry)
+        data = {
+            "access": user.token,
+            "username": user.client_login_username,
+            "cl_id": user.client_id ,
+            "company_id": user.client_company_id,
+            "company_id": user.client_company_id,
+            "first_name": user.client_first_name,
+            "company_logo": client_co[0][0],
+            "company_industry": client_co[0][1]
+            if user.client_first_name
+            else user.client_login_username,
+            "full_name": (
+                "%s %s" % (user.client_first_name, user.client_last_name)
+            ).title(),
+        }
+
+        return response.Response({**data})
 
 class Profile(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer

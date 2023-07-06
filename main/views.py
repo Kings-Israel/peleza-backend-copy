@@ -36,8 +36,7 @@ from datetime import datetime
 from django.db.models import Q
 from django.conf import settings
 from .worker_threads import MailerThread
-from django.http import FileResponse
-from django.http import JsonResponse
+from django.http import FileResponse, JsonResponse
 
 # Excel Upload and Save to Db
 # from .resources import PSMTRequestResource
@@ -50,6 +49,8 @@ import uuid
 from . import custom_query
 from . import reports
 from . import rabbit_queue
+from authentication import models
+from django.core import serializers
 # Create your views here.
 packages_id = settings.ALL_API_PACKAGES
 helper = HelperFunctions()
@@ -561,7 +562,7 @@ class PIDVARequestDetailView(RetrieveUpdateAPIView):
 class Stats(ListAPIView):
     def get(self, request, *args, **kwargs):
         user = request.user
-        company = request.user.company
+        company = request.user.client_parent_company
         credits = company.company_credit if company else 0
         packages_id.append(52) 
         #extra_query = {"client_id": user.pk, "package_id__in": packages_id}
@@ -839,11 +840,9 @@ class CompaniesList(ListAPIView):
     authentication_classes = []
     permission_classes = []
     def get(self, request, *args, **kwargs):
-        companies_query = "SELECT * FROM pel_client_co"
+        companies = models.ClientCompany.objects.using('remote').all()
 
-        companies = custom_query.custom_sql(companies_query)
-
-        return response.Response(companies)
+        return response.Response(serializers.serialize('json', companies))
     
 class IndustriesList(ListAPIView):
     authentication_classes = []
