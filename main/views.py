@@ -4,7 +4,9 @@ from main.models.company import (
     Encumbrance,
     ShareCapital,
     Shares,
+    
 )
+from main.models.help import FormData
 from rest_framework.serializers import Serializer
 from rest_framework import response
 from main.api_requests import HelperFunctions, RequestHandler
@@ -35,6 +37,7 @@ from django.db.models import Q
 from django.conf import settings
 from .worker_threads import MailerThread
 from django.http import FileResponse
+from django.http import JsonResponse
 
 # Excel Upload and Save to Db
 # from .resources import PSMTRequestResource
@@ -54,6 +57,38 @@ queue_publisher = rabbit_queue.QueuePublisher();
 
 
 
+@csrf_exempt
+def submit_help(request):
+    if request.method == 'POST':
+        # Access form data from the request.POST dictionary
+        first_name = request.POST.get('firstName','')
+        last_name = request.POST.get('lastName','')
+        email = request.POST.get('email','')
+        phone_number = request.POST.get('phoneNumber','')
+        subject = request.POST.get('subject', '')
+        image = request.POST.get('image')
+        message = request.POST.get('message','')
+
+        form_data = FormData(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            phone_number=phone_number,
+            subject=subject,
+            image = image,
+            message = message
+            # Assign values to other fields
+        )
+        form_data.save()
+
+      
+
+        # Return a JSON response indicating the success or failure of the form submission
+        return JsonResponse({'message': 'Form submitted'})
+    else:
+        # Handle GET requests to the submit-form URL
+        return JsonResponse({'message': 'Form not submitted!'})
+    
 
 @csrf_exempt
 @api_view(('POST',))

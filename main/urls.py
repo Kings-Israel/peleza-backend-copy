@@ -1,4 +1,6 @@
 from django.urls import path
+
+
 from . import views
 
 urlpatterns = [
@@ -6,6 +8,7 @@ urlpatterns = [
         "stats/",
         views.Stats.as_view(),
     ),
+   
     path(
         "request/",
         views.PSMTRequestApiView.as_view(),
@@ -37,6 +40,11 @@ urlpatterns = [
         views.file_upload
     ),
     path(
+         "submit-help/",
+        views.submit_help
+    ),
+
+    path(
         "test2/",
         views.test2
     ),
@@ -55,4 +63,4 @@ urlpatterns = [
 
     path("industries/", views.IndustriesList.as_view(),),
     
-]
+] 
