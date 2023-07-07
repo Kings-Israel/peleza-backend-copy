@@ -808,23 +808,23 @@ class CompaniesList(ListAPIView):
     def get(self, request, *args, **kwargs):
         companies = models.ClientCompany.objects.using('remote').all()
 
-        for company in companies:
-            models.ClientCompany.objects.create(
-                company_id=company.company_id,
-                company_name=company.company_name,
-                company_email_address=company.company_email_address,
-                company_mobile_number=company.company_mobile_number,
-                status=company.status,
-                added_date=company.added_date,
-                company_country=company.company_country,
-                added_by=company.added_by,
-                verified_by=company.verified_by,
-                company_industry=company.company_industry,
-                verified_date=company.verified_date,
-                company_logo=company.company_logo,
-                company_code=company.company_code,
-                company_credit=company.company_credit
-            )
+        # for company in companies:
+        #     models.ClientCompany.objects.create(
+        #         company_id=company.company_id,
+        #         company_name=company.company_name,
+        #         company_email_address=company.company_email_address,
+        #         company_mobile_number=company.company_mobile_number,
+        #         status=company.status,
+        #         added_date=company.added_date,
+        #         company_country=company.company_country,
+        #         added_by=company.added_by,
+        #         verified_by=company.verified_by,
+        #         company_industry=company.company_industry,
+        #         verified_date=company.verified_date,
+        #         company_logo=company.company_logo,
+        #         company_code=company.company_code,
+        #         company_credit=company.company_credit
+        #     )
 
         return response.Response(serializers.serialize('json', companies))
     

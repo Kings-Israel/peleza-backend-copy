@@ -94,9 +94,9 @@ WSGI_APPLICATION = "stanbicApi.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": config("DB_NAME", "peleza_db_local"),
+        "NAME": config("DB_NAME", "peleza"),
         "USER": config("DB_USER", "root"),
-        "PASSWORD": config("DB_PASSWORD", "secretpassword"),
+        "PASSWORD": config("DB_PASSWORD", ""),
         "PORT": config("DB_PORT", 3306),
         "HOST": config("DB_HOST", "localhost"),
         "OPTIONS": {
@@ -114,8 +114,6 @@ DATABASES = {
         "OPTIONS": {
             "init_command": "SET GLOBAL max_connections = 100000; ALTER DATABASE peleza_db_local CHARACTER SET utf8 "
                             "COLLATE utf8_general_ci;",
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            'init_command': 'SET default_storage_engine=INNODB',
         },
     }
 }
