@@ -116,7 +116,7 @@ class PelClient(models.Model):
         user = cls.objects.create(
             client_company_id=company,
             client_login_username=email,
-            client_password=md5(base64.b64decode(str(password).encode("ascii"))).hexdigest(),
+            client_password=hashlib.md5(password.encode()).hexdigest(),
             client_first_name=first_name,
             client_last_name=last_name,
             client_mobile_number=mobile_number,

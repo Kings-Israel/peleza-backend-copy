@@ -19,6 +19,7 @@ class Login(generics.CreateAPIView):
         if not user:
             raise exceptions.AuthenticationFailed()
         company_querry ="SELECT company_logo ,company_industry FROM peleza_db_local.pel_client_co where company_code='"+user.client_company_id +"'"
+        # company_querry ="SELECT company_logo ,company_industry FROM peleza.pel_client_co where company_code='"+user.client_company_id +"'"
         client_co = querry.custom_sql(company_querry)
         data = {
             "access": user.token,
@@ -52,6 +53,7 @@ class Register(generics.CreateAPIView):
 
         if not user:
             raise exceptions.AuthenticationFailed()
+        # company_querry ="SELECT company_logo ,company_industry FROM peleza.pel_client_co where company_code='"+user.client_company_id +"'"
         company_querry ="SELECT company_logo ,company_industry FROM peleza_db_local.pel_client_co where company_code='"+user.client_company_id +"'"
         client_co = querry.custom_sql(company_querry)
         data = {
