@@ -94,9 +94,9 @@ WSGI_APPLICATION = "stanbicApi.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": config("DB_NAME", "peleza"),
+        "NAME": config("DB_NAME", "peleza_db_local"),
         "USER": config("DB_USER", "root"),
-        "PASSWORD": config("DB_PASSWORD", ""),
+        "PASSWORD": config("DB_PASSWORD", "secretpassword"),
         "PORT": config("DB_PORT", 3306),
         "HOST": config("DB_HOST", "localhost"),
         "OPTIONS": {
