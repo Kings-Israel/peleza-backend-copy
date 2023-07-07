@@ -100,10 +100,9 @@ DATABASES = {
         "PORT": config("DB_PORT", 3306),
         "HOST": config("DB_HOST", "127.0.0.1"),
         "HOST": config("DB_HOST", "localhost"),
-        "OPTIONS": {
-            "init_command": "SET GLOBAL max_connections = 100000; ALTER DATABASE peleza_db_local CHARACTER SET utf8"
-                            "COLLATE utf8_general_ci;",
-        },
+       'OPTIONS': {
+           'charset': 'utf8mb4',
+},
     },
     "remote": {
         "ENGINE": "django.db.backends.mysql",
