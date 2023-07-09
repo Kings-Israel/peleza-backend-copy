@@ -24,7 +24,7 @@ class UserMiniSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    company = ClientCompanySerializer()
+    
 
     class Meta:
         fields = "__all__"

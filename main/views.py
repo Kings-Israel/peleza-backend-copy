@@ -7,6 +7,8 @@ from main.models.company import (
     
 )
 from main.models.help import FormData
+from main.models.addUser import AddUser
+from authentication.models import PelClient
 from rest_framework.serializers import Serializer
 from rest_framework import response
 from main.api_requests import HelperFunctions, RequestHandler
@@ -17,6 +19,9 @@ from main.serializers.psmt import (
     PSMTRequestSerializer,
     RequestSerializer,
 )
+from django.core.exceptions import ObjectDoesNotExist
+from main.models.addUser import AddUser
+from main.serializers.user import UserSerializer
 from django.db.models.query import QuerySet
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
@@ -89,6 +94,58 @@ def submit_help(request):
     else:
         # Handle GET requests to the submit-form URL
         return JsonResponse({'message': 'Form not submitted!'})
+    
+@csrf_exempt
+def add_user(request):
+    if request.method == 'POST':
+        # Access form data from the request.POST dictionary
+        first_name = request.POST.get('firstName','')
+        last_name = request.POST.get('lastName','')
+        email = request.POST.get('email','')
+        phone_number = request.POST.get('phoneNumber','')
+        city = request.POST.get('city', '')
+        address = request.POST.get('address')
+        added_by_id = request.POST.get('added_by_id')
+        company_id = request.POST.get('company', '')
+       
+        try:
+            company = PelClient.objects.get(client_company_id=company_id)
+        except PelClient.DoesNotExist:
+            return JsonResponse({'message': 'Invalid company'})
+
+        # Check if the user already exists
+        existing_user = AddUser.objects.filter(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            phone_number=phone_number,
+            city=city,
+            address=address,
+            added_by_id=added_by_id,
+            company=company,
+        ).first()
+
+        if existing_user:
+            return JsonResponse({'message': 'User already exists'})
+
+        user_form_data = AddUser(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            phone_number=phone_number,
+            city=city,
+            address=address,
+            added_by_id=added_by_id,
+            company=company
+        )
+        user_form_data.save()
+
+        # Return a JSON response indicating the success or failure of the form submission
+        return JsonResponse({'message': 'User added'})
+    else:
+        # Handle GET requests to the submit-form URL
+        return JsonResponse({'message': 'Invalid request method'})
+
     
 
 @csrf_exempt
@@ -600,6 +657,8 @@ class Test(ListAPIView):
     queryset = serializer_class.Meta.model.objects.all()
 
 
+
+
 @csrf_exempt
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
@@ -853,3 +912,13 @@ class IndustriesList(ListAPIView):
         industries = custom_query.custom_sql(industries_query)
 
         return response.Response(industries)
+    
+
+class UserListAPIView(ListAPIView):
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        client_id = self.request.user.client_id
+        return AddUser.objects.filter(added_by__client_id=client_id).order_by('id')
+
+

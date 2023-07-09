@@ -49,7 +49,7 @@ class PSMTRequestSerializer(serializers.ModelSerializer):
             "company_name",
             "status_date",
             "company_type",
-            "client_number",
+            
             "dataset_incorporation_no",
             "dataset_kra_pin",
             "package_cost_currency",

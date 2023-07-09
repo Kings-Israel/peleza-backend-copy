@@ -43,6 +43,14 @@ urlpatterns = [
          "submit-help/",
         views.submit_help
     ),
+     path(
+         "add-user/",
+        views.add_user
+    ),
+    path(
+         "get-add-users/",
+          views.UserListAPIView.as_view(),
+    ),
 
     path(
         "test2/",

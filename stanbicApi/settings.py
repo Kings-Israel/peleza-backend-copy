@@ -99,7 +99,7 @@ DATABASES = {
         "PASSWORD": config("DB_PASSWORD", "1999"),
         "PORT": config("DB_PORT", 3306),
         "HOST": config("DB_HOST", "127.0.0.1"),
-        "HOST": config("DB_HOST", "localhost"),
+       
        'OPTIONS': {
            'charset': 'utf8mb4',
 },

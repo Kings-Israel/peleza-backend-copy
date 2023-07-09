@@ -28,7 +28,7 @@ class ClientCompany(models.Model):
 
 class PelClient(models.Model):
     client_id = models.AutoField(unique=True, editable=False, primary_key=True)
-    client_company_id = models.CharField(max_length=200, blank=True, null=True)
+    client_company_id = models.CharField(unique=True, max_length=200, blank=True, null=True)
     client_login_username = models.CharField(
         max_length=200, blank=True, null=True, unique=True
     )
@@ -42,6 +42,7 @@ class PelClient(models.Model):
         db_column="client_parent_company",
         to_field="company_name",
     )
+    
     client_pin = models.CharField(max_length=255)
 
     client_first_name = models.CharField(max_length=255)
