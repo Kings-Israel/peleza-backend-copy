@@ -28,7 +28,7 @@ class ClientCompany(models.Model):
 
 class PelClient(models.Model):
     client_id = models.AutoField(unique=True, editable=False, primary_key=True)
-    client_company_id = models.CharField(unique=True, max_length=200, blank=True, null=True)
+    client_company_id = models.CharField(max_length=200, blank=True, null=True, unique=False)
     client_login_username = models.CharField(
         max_length=200, blank=True, null=True, unique=True
     )
@@ -44,7 +44,7 @@ class PelClient(models.Model):
     )
     
     client_pin = models.CharField(max_length=255)
-
+   
     client_first_name = models.CharField(max_length=255)
     client_last_name = models.CharField(max_length=255)
 
@@ -52,7 +52,12 @@ class PelClient(models.Model):
     client_postal_address = models.CharField(max_length=255, blank=True, null=True)
     client_postal_code = models.CharField(max_length=255, blank=True, null=True)
     client_city = models.CharField(max_length=255, blank=True, null=True)
-
+    added_by = models.ForeignKey(
+        "authentication.PelClient",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
     REQUIRED_FIELDS = ("password", "company_name", "company_id")
     USERNAME_FIELD = "client_login_username"
 

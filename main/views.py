@@ -7,8 +7,10 @@ from main.models.company import (
     
 )
 from main.models.help import FormData
-from main.models.addUser import AddUser
-from authentication.models import PelClient
+
+from authentication.models import PelClient, ClientCompany
+from main.models.permissions import Permissions
+from main.models.user_has_permission import UserHasPermission
 from rest_framework.serializers import Serializer
 from rest_framework import response
 from main.api_requests import HelperFunctions, RequestHandler
@@ -20,7 +22,7 @@ from main.serializers.psmt import (
     RequestSerializer,
 )
 from django.core.exceptions import ObjectDoesNotExist
-from main.models.addUser import AddUser
+
 from main.serializers.user import UserSerializer
 from django.db.models.query import QuerySet
 from rest_framework.exceptions import ValidationError
@@ -107,44 +109,61 @@ def add_user(request):
         address = request.POST.get('address')
         added_by_id = request.POST.get('added_by_id')
         company_id = request.POST.get('company', '')
-       
+        
         try:
-            company = PelClient.objects.get(client_company_id=company_id)
-        except PelClient.DoesNotExist:
+           added_by = PelClient.objects.get(client_id=int(added_by_id))
+        except (ValueError, PelClient.DoesNotExist):
+           return JsonResponse({'message': 'Invalid added_by'})
+
+        try:
+            client_parent_company = ClientCompany.objects.get(company_name=company_id)
+        except (ValueError, ClientCompany.DoesNotExist):
             return JsonResponse({'message': 'Invalid company'})
-
-        # Check if the user already exists
-        existing_user = AddUser.objects.filter(
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            phone_number=phone_number,
-            city=city,
-            address=address,
-            added_by_id=added_by_id,
-            company=company,
-        ).first()
-
-        if existing_user:
-            return JsonResponse({'message': 'User already exists'})
-
-        user_form_data = AddUser(
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            phone_number=phone_number,
-            city=city,
-            address=address,
-            added_by_id=added_by_id,
-            company=company
+        
+        client = PelClient(
+            client_company_id=company_id,
+            client_first_name=first_name,
+            client_last_name=last_name,
+            client_login_username= email,
+            client_mobile_number=phone_number,
+            client_postal_address=address,
+            added_by=added_by,
+            client_city=city,
+            client_parent_company=client_parent_company,
         )
-        user_form_data.save()
+        client.save()
+        
+
+                # Extract the selected permissions data
+        permissions_data = {
+            'create_request': int(request.POST.get('create_request', 0)),
+            'view_request': int(request.POST.get('view_request', 0)),
+            'add_user': int(request.POST.get('add_user', 0)),
+            'view_user': int(request.POST.get('view_user', 0)),
+            'create_batch_request': int(request.POST.get('create_batch_request', 0)),
+            'view_batch_request': int(request.POST.get('view_batch_request', 0)),
+        }
+
+        # Save user permissions in UserHasPermission model
+        for permission, value in permissions_data.items():
+            if value:
+                permission_obj = Permissions.objects.get(permission=permission)
+                user_permission = UserHasPermission(
+                    permission_id=permission_obj.id,
+                    user_id=client.client_id
+                )
+                user_permission.save()
+
+
+     
 
         # Return a JSON response indicating the success or failure of the form submission
         return JsonResponse({'message': 'User added'})
     else:
         # Handle GET requests to the submit-form URL
         return JsonResponse({'message': 'Invalid request method'})
+
+
 
     
 
@@ -919,6 +938,6 @@ class UserListAPIView(ListAPIView):
 
     def get_queryset(self):
         client_id = self.request.user.client_id
-        return AddUser.objects.filter(added_by__client_id=client_id).order_by('id')
+        return PelClient.objects.filter(added_by__client_id=client_id).order_by('client_id')
 
 
