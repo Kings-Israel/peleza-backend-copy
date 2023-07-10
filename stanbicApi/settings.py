@@ -96,25 +96,25 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": config("DB_NAME", "peleza_db_local"),
         "USER": config("DB_USER", "root"),
-        "PASSWORD": config("DB_PASSWORD", ""),
+        "PASSWORD": config("DB_PASSWORD", "secretpassword"),
         "PORT": config("DB_PORT", 3306),
         "HOST": config("DB_HOST", "127.0.0.1"),
         'OPTIONS': {
             'charset': 'utf8mb4',
         },
     },
-    # "remote": {
-    #     "ENGINE": "django.db.backends.mysql",
-    #     "NAME": config("DB_NAME", "peleza_db_local"),
-    #     "USER": config("DB_USER", "root"),
-    #     "PASSWORD": config("DB_PASSWORD", "p3l3z@1234"),
-    #     "PORT": config("DB_PORT", 3306),
-    #     "HOST": config("DB_HOST", "46.101.16.235"),
-    #     "OPTIONS": {
-    #         "init_command": "SET GLOBAL max_connections = 100000; ALTER DATABASE peleza_db_local CHARACTER SET utf8 "
-    #                         "COLLATE utf8_general_ci;",
-    #     },
-    # }
+    "remote": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": config("DB_NAME", "peleza_db_local"),
+        "USER": config("DB_USER", "root"),
+        "PASSWORD": config("DB_PASSWORD", "p3l3z@1234"),
+        "PORT": config("DB_PORT", 3306),
+        "HOST": config("DB_HOST", "46.101.16.235"),
+        "OPTIONS": {
+            "init_command": "SET GLOBAL max_connections = 100000; ALTER DATABASE peleza_db_local CHARACTER SET utf8 "
+                            "COLLATE utf8_general_ci;",
+        },
+    }
 }
 
 REST_FRAMEWORK = {
