@@ -61,7 +61,6 @@ class Register(generics.CreateAPIView):
             "username": user.client_login_username,
             "cl_id": user.client_id ,
             "company_id": user.client_company_id,
-            "company_id": user.client_company_id,
             "first_name": user.client_first_name,
             "company_logo": client_co[0][0],
             "company_industry": client_co[0][1]

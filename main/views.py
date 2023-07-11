@@ -107,11 +107,12 @@ def add_user(request):
         phone_number = request.POST.get('phoneNumber','')
         city = request.POST.get('city', '')
         address = request.POST.get('address')
-        added_by_id = request.POST.get('added_by_id')
+        added_by = request.POST.get('added_by_id')
         company_id = request.POST.get('company', '')
         
         try:
-           added_by = PelClient.objects.get(client_id=int(added_by_id))
+           added_by = PelClient.objects.get(client_id=int(added_by))
+           print(added_by)
         except (ValueError, PelClient.DoesNotExist):
            return JsonResponse({'message': 'Invalid added_by'})
 
@@ -341,7 +342,7 @@ class PSMTRequestListApiView(ListAPIView):
         q = self.request.GET.get("q", "").strip()
         status = self.request.GET.get("status", "").strip()
 
-        company = self.request.user.company
+        company = self.request.user.client_parent_company
 
         extra = {}
         if status == "completed":
@@ -895,7 +896,7 @@ def test2(request):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def List(request):  
     user=request.user
-    company_id=getattr(user,'company_id')
+    company_id=getattr(user,'client_company_id')
     
     module_code = request.query_params.get('module_code')
     date_from = request.query_params.get('date_from')
