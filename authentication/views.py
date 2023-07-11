@@ -62,13 +62,9 @@ class Register(generics.CreateAPIView):
 
         if not user:
             raise exceptions.AuthenticationFailed()
-<<<<<<< HEAD
-        company_querry ="SELECT company_logo ,company_industry FROM peleza_db_local.pel_client_co where company_code='"+user.client_company_id +"'"
-=======
         # company_querry ="SELECT company_logo ,company_industry FROM peleza.pel_client_co where company_code='"+user.client_company_id +"'"
         company_querry ="SELECT company_logo ,company_industry FROM peleza_db_local.pel_client_co where company_code='"+str(user.client_company_id)+"'"
         permissions_query = "SELECT permission_id FROM peleza_db_local.main_userhaspermission WHERE user_id='"+str(user.client_id)+"'"
->>>>>>> kings
         client_co = querry.custom_sql(company_querry)
         user_permissions = querry.custom_sql(permissions_query)
         selected_permissions = []
