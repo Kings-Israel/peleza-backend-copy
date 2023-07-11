@@ -1,0 +1,8 @@
+[
+  { "model": "main.permissions", "pk": 1, "fields": { "permission": "create users" }},
+  { "model": "main.permissions", "pk": 2, "fields": { "permission": "view users" }},
+  { "model": "main.permissions", "pk": 3, "fields": { "permission": "create requests" }},
+  { "model": "main.permissions", "pk": 4, "fields": { "permission": "view requests" }},
+  { "model": "main.permissions", "pk": 5, "fields": { "permission": "create batch requests" }},
+  { "model": "main.permissions", "pk": 6, "fields": { "permission": "view batch requests" }}
+]
