@@ -139,7 +139,7 @@ class RequestHandler(threading.Thread, HelperFunctions):
 
     def create_instance(self, silent=False):
         request = self.request
-        company = request.user.company
+        company = request.user.client_parent_company
 
         company_code = company.company_code
 

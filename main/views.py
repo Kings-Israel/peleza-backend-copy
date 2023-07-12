@@ -13,6 +13,7 @@ from main.models.permissions import Permissions
 from main.models.user_has_permission import UserHasPermission
 from rest_framework.serializers import Serializer
 from rest_framework import response
+from rest_framework import status
 from main.api_requests import HelperFunctions, RequestHandler
 from main.serializers.company import BusinessCompanyRegSerializer
 from main.serializers.psmt import (
@@ -287,9 +288,7 @@ def simple_upload(request):
 class PSMTRequestApiView(CreateAPIView):
     serializer_class = RequestSerializer
 
-    def generate_ref_number(
-            self,
-    ):
+    def generate_ref_number(self):
         letters = string.ascii_uppercase
         timestamp = datetime.now()
         output = "%s%s-%s%s" % (
@@ -300,7 +299,7 @@ class PSMTRequestApiView(CreateAPIView):
         )
         return output
 
-    def post(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         instance = self.validate_request()
         request_ref_number = self.generate_ref_number()
 
@@ -314,7 +313,17 @@ class PSMTRequestApiView(CreateAPIView):
             "percentage": 0.00,
         }
 
-        return Response(data, status=HTTP_201_CREATED)
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+
+       
 
     def validate_request(self):
         serializer = self.get_serializer(data=self.request.data)
@@ -644,7 +653,10 @@ class Stats(ListAPIView):
         packages_id.append(52) 
         #extra_query = {"client_id": user.pk, "package_id__in": packages_id}
         #temporary fix for ncba until we can find a way to read usee company id in login token
-        extra_query = {"company_name": "NCBA"}
+        extra_query = {
+        "status__in": ["00", "11"],
+        "company_name": "NCBA",
+        }
         #print(extra_query)
         new = PSMTRequest.objects.filter(status="00", **extra_query).count()
         final = PSMTRequest.objects.filter(status="11", **extra_query).count()
@@ -658,7 +670,7 @@ class Stats(ListAPIView):
                            :100
                            ].select_related("business")
         recent_requests = PSMTRequestSerializer(_recent_requests, many=True)
-
+        
         data = {
             "credits": credits,
             "new": new,
@@ -666,7 +678,7 @@ class Stats(ListAPIView):
             "in_progress": in_progress,
             "interim": 0,
             "invalid": invalid,
-            "recent": recent_requests.data,
+            "recent": recent_requests.data, 
         }
 
         return response.Response(data=data)

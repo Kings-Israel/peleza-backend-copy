@@ -2,7 +2,7 @@ from authentication.serializers import UserMiniSerializer
 from main.serializers.company import BusinessCompanyRegSerializer
 from rest_framework import serializers
 from main.models.psmt import Package, BgRequestModule, PSMTRequest
-
+from django.utils.timezone import now
 
 class PackageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -49,7 +49,7 @@ class PSMTRequestSerializer(serializers.ModelSerializer):
             "company_name",
             "status_date",
             "company_type",
-           
+            "client_number",
             "dataset_incorporation_no",
             "dataset_kra_pin",
             "package_cost_currency",
@@ -128,14 +128,21 @@ class PIDVARequestDetailSerializer(PSMTRequestDetailSerializer):
         )
 
 
-from django.utils.timezone import now
+
 
 
 class RequestSerializer(serializers.Serializer):
     registration_number = serializers.CharField(required=True)
     package_id = serializers.IntegerField(required=True)
-    module_id = serializers.IntegerField(required=True)
     dataset_name = serializers.CharField(required=True)
     client_number = serializers.CharField(required=True)
     dataset_citizenship = serializers.CharField(required=True)
     request_date = serializers.CharField(default=now().strftime("%d %b %Y %H:%M"))
+
+
+    def create(self, validated_data):
+        # Perform the necessary steps to create and save the new request
+        request = PSMTRequest.objects.create(**validated_data)
+        # Perform any additional processing or validations if needed
+        # Return the created request instance
+        return request
