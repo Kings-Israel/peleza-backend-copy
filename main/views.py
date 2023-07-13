@@ -24,6 +24,7 @@ from main.serializers.psmt import (
 from django.core.exceptions import ObjectDoesNotExist
 
 from main.serializers.user import UserSerializer
+from main.serializers.help import HelpSerializer
 from django.db.models.query import QuerySet
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
@@ -62,7 +63,8 @@ import hashlib
 # Create your views here.
 packages_id = settings.ALL_API_PACKAGES
 helper = HelperFunctions()
-queue_publisher = rabbit_queue.QueuePublisher(); 
+queue_publisher = rabbit_queue.QueuePublisher()
+from django.utils.crypto import get_random_string
 
 
 
@@ -70,6 +72,7 @@ queue_publisher = rabbit_queue.QueuePublisher();
 def submit_help(request):
     if request.method == 'POST':
         # Access form data from the request.POST dictionary
+        user_id = request.POST.get('userId', None)
         first_name = request.POST.get('firstName','')
         last_name = request.POST.get('lastName','')
         email = request.POST.get('email','')
@@ -85,19 +88,24 @@ def submit_help(request):
             phone_number=phone_number,
             subject=subject,
             image = image,
-            message = message
+            message = message,
+            user_id = user_id
             # Assign values to other fields
         )
         form_data.save()
-
-      
-
         # Return a JSON response indicating the success or failure of the form submission
         return JsonResponse({'message': 'Form submitted'})
     else:
         # Handle GET requests to the submit-form URL
         return JsonResponse({'message': 'Form not submitted!'})
-    
+
+class HelpListApiView(ListAPIView):
+    serializer_class = HelpSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return FormData.objects.filter(user_id=user.client_id).order_by('-id')
+
 @csrf_exempt
 def add_user(request):
     if request.method == 'POST':
@@ -110,7 +118,6 @@ def add_user(request):
         address = request.POST.get('address')
         added_by_id = request.POST.get('added_by_id')
         company_id = request.POST.get('company', '')
-        password = request.POST.get('password', '')
         
         try:
            added_by = PelClient.objects.get(client_id=int(added_by_id))
@@ -123,7 +130,7 @@ def add_user(request):
             return JsonResponse({'message': 'Invalid company'})
         
         client = PelClient(
-            client_company_id=company_id,
+            client_company_id=client_parent_company.company_code,
             client_first_name=first_name,
             client_last_name=last_name,
             client_login_username= email,
@@ -132,7 +139,7 @@ def add_user(request):
             added_by=added_by,
             client_city=city,
             client_parent_company=client_parent_company,
-            client_password=hashlib.md5(password.encode()).hexdigest(),
+            client_password=hashlib.md5(get_random_string(length=10).encode()).hexdigest(),
         )
         client.save()
         
@@ -289,16 +296,13 @@ def simple_upload(request):
 class PSMTRequestApiView(CreateAPIView):
     serializer_class = RequestSerializer
 
-    def generate_ref_number(
-            self,
-    ):
+    def generate_ref_number(self,):
         letters = string.ascii_uppercase
         timestamp = datetime.now()
-        output = "%s%s-%s%s" % (
+        output = "%s%s-%s" % (
             "".join(random.choices(letters, k=3)),
-            "".join(random.choices(string.digits, k=1)),
             timestamp.strftime("%f"),
-            "".join(random.choices(letters, k=1)),
+            "".join(random.choices(letters, k=3)),
         )
         return output
 
@@ -344,7 +348,7 @@ class PSMTRequestListApiView(ListAPIView):
         q = self.request.GET.get("q", "").strip()
         status = self.request.GET.get("status", "").strip()
 
-        company = self.request.user.company
+        company = self.request.user.client_parent_company
 
         extra = {}
         if status == "completed":
@@ -381,21 +385,8 @@ class PSMTRequestDetailView(RetrieveAPIView):
 
     def get_object(self):
         user=self.request.user
-        print(user)
-        company_id=getattr(user,'company_id')
-
-        company = self.request.user.company
         package_id = self.kwargs.get("package_id", 0)
         request_ref_number = self.kwargs.get("request_ref_number", 0)
-        company.company_code=company_id
-      
-  
-        # obj = get_object_or_404(
-        #     PSMTRequest,
-        #     package_id=package_id,
-        #     client_login_id=company.company_code if company else 0,
-        #     request_ref_number=request_ref_number,
-        # )
 
         obj = get_object_or_404(
             PSMTRequest,
@@ -643,22 +634,15 @@ class Stats(ListAPIView):
         user = request.user
         company = request.user.client_parent_company
         credits = company.company_credit if company else 0
-        packages_id.append(52) 
-        #extra_query = {"client_id": user.pk, "package_id__in": packages_id}
-        #temporary fix for ncba until we can find a way to read usee company id in login token
-        extra_query = {"company_name": "NCBA"}
-        #print(extra_query)
+        packages_id.append(52)
+        extra_query = {"company_name": company.company_name}
         new = PSMTRequest.objects.filter(status="00", **extra_query).count()
         final = PSMTRequest.objects.filter(status="11", **extra_query).count()
         invalid = PSMTRequest.objects.filter(status="55", **extra_query).count()
-        in_progress = PSMTRequest.objects.filter(
-            Q(status="44") | Q(status="33"), **extra_query
-        ).order_by("-request_id").count()
-        
+        in_progress = PSMTRequest.objects.filter(Q(status="44") | Q(status="33"), **extra_query).order_by("-request_id").count()
 
-        _recent_requests = PSMTRequest.objects.filter(**extra_query)[
-                           :100
-                           ].select_related("business")
+
+        _recent_requests = PSMTRequest.objects.filter(**extra_query)[:100].select_related("business")
         recent_requests = PSMTRequestSerializer(_recent_requests, many=True)
 
         data = {
@@ -708,204 +692,21 @@ def download_file(response):
 
     response = FileResponse(open(rpt, 'rb'))
     return response    
- 
-
-
-@csrf_exempt
-@api_view(('GET',))
-@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def test2(request):  
-    user=request.user
-    company_id=getattr(user,'company_id')
-
-    module_code = request.query_params.get('module_code')
-    date_from = request.query_params.get('date_from')
-    date_to = request.query_params.get('date_to')
-    request_id = request.query_params.get('request_id')
-
-    company_clg_querry=('SELECT pel_company_registration.company_reg_id, '
-                        'pel_company_registration.company_name , '
-                        'pel_company_registration.email_address, '
-                        'pel_company_registration.`status`, '
-                        'pel_company_registration.registration_number, '
-                        'pel_company_registration.mobile_number, '
-                        'pel_company_registration.added_by, '
-                        'pel_company_registration.verified_by, '
-                        'pel_company_registration.user_id, '
-                         'pel_company_registration.search_id, '
-                         'pel_company_registration.registration_date, '
-                         'pel_company_registration.country, '
-                         'pel_company_registration.shafile, '
-                         'pel_company_registration.data_source, '
-                         'pel_company_registration.data_notes, '
-                            'pel_company_registration.match_status, '
-                            'pel_company_registration.address, '
-                            'pel_company_registration.offices, '
-                            'pel_company_registration.operation_status, '
-                            'pel_company_registration.industry, '
-                            'pel_company_registration.token, '
-                            'pel_company_registration.data_id, '
-                            'pel_company_registration.date_added, '
-                            'pel_company_registration.module_name, '
-                            'pel_company_registration.verified_date, '
-                            'pel_company_registration.review_status, '
-                            'pel_company_registration.review_notes, '
-                            'pel_company_registration.business_type, '
-                            'pel_company_registration.nature_of_business, '
-                            'pel_company_registration.kra_pin, '
-                            'pel_company_registration.postal_address, '
-                            'pel_company_registration.type, '
-                            'pel_company_registration.member_count, '
-                            'pel_company_registration.objective, '
-                            'pel_company_registration.verified, '
-                            'pel_psmt_request.request_ref_number, '
-                            'pel_psmt_request.bg_dataset_name, '
-                            'pel_psmt_request.request_id, '
-                            'pel_psmt_request.request_plan, '
-                            'pel_psmt_request.dataset_citizenship, '
-                            'pel_psmt_request.bg_dataset_email, '
-                            'pel_psmt_request.bg_dataset_mobile, '
-                            'pel_psmt_request.bg_dataset_idnumber, '
-                            'pel_psmt_request.registration_number, '
-                            'pel_psmt_request.client_number, '
-                            'pel_psmt_request.company_type, '
-                            'pel_psmt_request.dataset_incorporation_no, '
-                            'pel_psmt_request.dataset_kra_pin, '
-                            'pel_psmt_request.request_type, '
-                            'pel_psmt_request.dataset_name, '
-                            'pel_psmt_request.request_package, '
-                            'pel_company_share_capital.id, '
-                            'pel_company_share_capital.number_of_shares, '
-                            'pel_company_share_capital.nominal_value, '
-                            'pel_company_share_capital.`name`, '
-                            'pel_company_share_capital.business_id, '
-                            'pel_module.module_code ,'
-                            'pel_psmt_request.client_id, '
-                            'pel_psmt_request.client_login_id, '
-                            'pel_psmt_request.client_name, '
-                            'pel_psmt_request.request_date ,'
-                            'pel_psmt_request.package_id '                          
-                            'FROM '
-                            'pel_company_registration '
-                            'INNER JOIN pel_psmt_request ON pel_company_registration.search_id = pel_psmt_request.request_ref_number '
-                            'INNER JOIN pel_company_share_capital ON pel_company_registration.company_reg_id = pel_company_share_capital.business_id '
-                            'INNER JOIN pel_psmt_request_modules ON pel_psmt_request_modules.request_ref_number = pel_psmt_request.request_ref_number '
-                            'INNER JOIN pel_module ON pel_psmt_request_modules.module_id = pel_module.module_id where pel_module.module_code="'+module_code+'" ' 
-                            'AND pel_psmt_request.request_date BETWEEN "'+ date_from+'" AND "'+date_to +'" AND pel_psmt_request.client_login_id="'+company_id +'"')
-    #print(company_clg_querry)
-    share_querry =('SELECT pel_company_shares_data.shares_id, '
-                        'pel_company_shares_data.first_name, '
-                        'pel_company_shares_data.second_name, '
-                        'pel_company_shares_data.share_type, '
-                        'pel_company_shares_data.address, '
-                        'pel_company_shares_data.registration_date, '
-                        'pel_company_shares_data.shares_number, '
-                        'pel_company_shares_data.company_id, '
-                        'pel_company_shares_data.data_id, '
-                        'pel_company_shares_data.date_added, '
-                        'pel_company_shares_data.verified_date, '
-                        'pel_company_shares_data.review_status, '
-                        'pel_company_shares_data.review_notes, '
-                        'pel_company_shares_data.percentage, '
-                        'pel_company_shares_data.id_number, '
-                        'pel_company_shares_data.business, '
-                        'pel_company_shares_data.description, '
-                        'pel_company_shares_data.citizenship, '
-                        'pel_psmt_request.request_ref_number, '
-                        'pel_company_shares_data.third_name, '
-                        'pel_psmt_request.bg_dataset_name, '
-                        'pel_psmt_request.request_plan, '
-                        'pel_psmt_request.dataset_citizenship, '
-                        'pel_psmt_request.company_name, '
-                        'pel_psmt_request.request_dataset_cat, '
-                        'pel_psmt_request.client_name, '
-                        'pel_psmt_request.bg_dataset_email, '
-                        'pel_psmt_request.bg_dataset_mobile, '
-                        'pel_psmt_request.bg_dataset_idnumber, '
-                        'pel_psmt_request.dataset_name, '
-                        'pel_psmt_request.dataset_kra_pin, '
-                        'pel_psmt_request.dataset_incorporation_no, '
-                        'pel_psmt_request.registration_number, '
-                        'pel_psmt_request.client_number, '
-                        'pel_psmt_request.company_type '
-                        'FROM '
-                        'pel_company_shares_data '
-                        'INNER JOIN pel_psmt_request ON pel_psmt_request.request_ref_number = pel_company_shares_data.search_id '
-                        'where pel_psmt_request.request_id ="'+ request_id + '" ')
-
-       # for cooperative ,association ngo cbo selfhelp group         req_id =2924           
-    officials_querry =('SELECT pel_company_registration.company_reg_id, '
-                        'pel_company_registration.company_name, '
-                        'pel_company_registration.email_address, '
-                        'pel_company_registration.`status`, '
-                        'pel_company_registration.registration_number, '
-                        'pel_company_registration.mobile_number, '
-                        'pel_company_registration.added_by, '
-                        'pel_company_registration.verified_by, '
-                        'pel_company_registration.user_id, '
-                        'pel_company_registration.search_id, '
-                        'pel_company_registration.registration_date, '
-                        'pel_company_registration.country, '
-                        'pel_company_registration.shafile, '
-                        'pel_company_registration.data_source, '
-                        'pel_company_registration.data_notes, '
-                        'pel_company_registration.match_status, '
-                        'pel_company_registration.address, '
-                        'pel_company_registration.offices, '
-                        'pel_company_registration.operation_status, '
-                        'pel_company_registration.industry, '
-                        'pel_company_registration.token, '
-                        'pel_company_registration.data_id, '
-                        'pel_company_registration.date_added, '
-                        'pel_company_registration.module_name, '
-                        'pel_company_registration.verified_date, '
-                        'pel_company_registration.review_status, '
-                        'pel_company_registration.review_notes, '
-                        'pel_company_registration.business_type, '
-                        'pel_company_registration.nature_of_business, '
-                        'pel_company_registration.kra_pin, '
-                        'pel_company_registration.postal_address, '
-                        'pel_company_registration.type, '
-                        'pel_company_registration.member_count, '
-                        'pel_company_registration.objective, '
-                        'pel_company_registration.verified, '
-                        'pel_company_official_details.role, '
-                        'pel_company_official_details.`name`, '
-                        'pel_company_official_details.id, '
-                        'pel_company_official_details.date_added, '
-                        'pel_company_official_details.company_id, '
-                        'pel_psmt_request.request_ref_number, '
-                        'pel_psmt_request.request_id '
-                        'FROM '
-                        'pel_company_registration '
-                        'INNER JOIN pel_company_official_details ON pel_company_official_details.company_id = pel_company_registration.company_reg_id '
-                        'INNER JOIN pel_psmt_request ON pel_company_registration.search_id = pel_psmt_request.request_ref_number where pel_psmt_request.request_id = "'+ request_id + '" ')
-
-    # for parnership and llp do not have share data so not shownN
-
-    #print(officials_querry)                        
-    module_data = custom_query.custom_sql(company_clg_querry) 
-    #print(module_data)
-    rep ={
-     "receive":"request processed successfully"
-    }        
-    return JsonResponse(data=module_data,  safe=False)   
-
 
 
 @csrf_exempt
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def List(request):  
-    user=request.user
-    company_id=getattr(user,'company_id')
+    user = request.user
+    company_id = user.client_parent_company.company_code
     
     module_code = request.query_params.get('module_code')
     date_from = request.query_params.get('date_from')
     date_to = request.query_params.get('date_to')
     status = request.query_params.get('status')
-    module_data=custom_query.request_querry(status,module_code,date_from,date_to,company_id)      
-    return JsonResponse(data=module_data,  safe=False)   
+    module_data = custom_query.request_querry(status,module_code,date_from,date_to,company_id)
+    return JsonResponse(data=module_data, safe=False)   
 
 class CountriesList(ListAPIView):
     authentication_classes = []
@@ -935,12 +736,10 @@ class IndustriesList(ListAPIView):
 
         return response.Response(industries)
     
-
 class UserListAPIView(ListAPIView):
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        client_id = self.request.user.client_id
-        return PelClient.objects.filter(added_by__client_id=client_id).order_by('client_id')
-
-
+        user = self.request.user
+        client_id = user.client_parent_company
+        return PelClient.objects.filter(client_parent_company=client_id).order_by('client_id')

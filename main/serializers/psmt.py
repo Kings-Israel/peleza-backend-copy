@@ -1,7 +1,7 @@
 from authentication.serializers import UserMiniSerializer
 from main.serializers.company import BusinessCompanyRegSerializer
 from rest_framework import serializers
-from main.models.psmt import Package, BgRequestModule, PSMTRequest
+from main.models.psmt import Package, BgRequestModule, PSMTRequest, Module
 
 
 class PackageSerializer(serializers.ModelSerializer):
@@ -49,7 +49,7 @@ class PSMTRequestSerializer(serializers.ModelSerializer):
             "company_name",
             "status_date",
             "company_type",
-           
+            "client_number",
             "dataset_incorporation_no",
             "dataset_kra_pin",
             "package_cost_currency",
@@ -61,6 +61,7 @@ class PSMTRequestSerializer(serializers.ModelSerializer):
             "client_name",
             "request_dataset_cat",
             "dataset_citizenship",
+            "medium",
         )
         extra_kwargs = {
             "request_ref_number": {"read_only": True},

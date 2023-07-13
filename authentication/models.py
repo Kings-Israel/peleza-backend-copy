@@ -121,35 +121,19 @@ class PelClient(models.Model):
     @classmethod
     def register(cls, first_name, last_name, email, mobile_number, password, city, company_id, company):
         user = None
-        client_company = ClientCompany.objects.get(company_id=company_id)
+        client_company = ClientCompany.objects.get(company_id=company_id[0])
         user = cls.objects.create(
-            client_company_id=company,
-            client_login_username=email,
-            client_password=hashlib.md5(password.encode()).hexdigest(),
-            client_first_name=first_name,
-            client_last_name=last_name,
-            client_mobile_number=mobile_number,
+            client_company_id=company[0],
+            client_login_username=email[0],
+            client_password=hashlib.md5(password[0].encode()).hexdigest(),
+            client_first_name=first_name[0],
+            client_last_name=last_name[0],
+            client_mobile_number=mobile_number[0],
             client_postal_address='8817',
             client_postal_code='00100',
-            client_city=city,
+            client_city=city[0],
             client_parent_company=client_company,
-            # client_email_address=email,
-            # client_country=country,
-            # client_industry=client_industry,
-            # client_type=account_type,
-            # added_date=timezone.now(),
-            # added_by=email
         )
-
-        # permissions_query = "SELECT id FROM peleza_db_local.main_permissions"
-        # user_permissions = querry.custom_sql(permissions_query)
-        # for permission in user_permissions:
-        #     user_permission = UserHasPermission(
-        #         permission_id=permission[0],
-        #         user_id=user.client_id
-        #     )
-        #     user_permission.save()
-
 
         if user:
                 token = cls.generate_token()

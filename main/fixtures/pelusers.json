@@ -1,0 +1,31 @@
+[
+  {
+    "model": "main.PelUser",
+    "pk" : 1,
+    "fields": {
+      "usr_id": 1,
+      "usr_mailer_id": null,
+      "usr_created_by": "anonymousUser",
+      "usr_created_at": "2016-02-27 03:00:00",
+      "usr_date_modified": "2016-03-03 20:15:27",
+      "usr_email": "marita@superadmin.com",
+      "usr_last_password_change": "2016-03-03 20:40:38",
+      "usr_modified_by": "Super Administrator",
+      "usr_name": "Super Administrator",
+      "usr_password": "81dc9bdb52d04dc20036dbd8313ed055",
+      "usr_phone_number": "254723594312",
+      "usr_retries": "",
+      "usr_staff_id": "PELEZA",
+      "usr_status": "11",
+      "usr_username": "pidva@peleza.com",
+      "fk_institution_id": "PELEZA INTERNATIONAL",
+      "usr_pin": "KWYe6v0631",
+      "usr_pin_status": "0",
+      "usr_photo": "https://peleza.fra1.digitaloceanspaces.com/user-userimages/1667464535.9981_03112022113535_PELEZA_peleza_php.php",
+      "usr_last_login": null,
+      "usr_national_id": "23680415",
+      "usr_profile_id": "1",
+      "usr_profile_name": "Super Administrator"
+    }
+  }
+]

@@ -1,4 +1,4 @@
-
+import datetime
 
 def custom_sql(querry):
     from django.db import connection
@@ -21,6 +21,8 @@ def request_querry (status,module_code,date_from,date_to,company_id):
      status='33'         
     else:
      status='00'
+
+    module = '' if module_code and module_code == '' or module_code == 'all' else 'AND pel_module.module_code="'+module_code+'"'
 
     list_querry=('SELECT pel_psmt_request.request_ref_number,'
                  'pel_psmt_request.bg_dataset_name, '
@@ -52,11 +54,12 @@ def request_querry (status,module_code,date_from,date_to,company_id):
                  'INNER JOIN pel_psmt_request_modules ON pel_psmt_request_modules.request_ref_number = pel_psmt_request.request_ref_number '
                  'INNER JOIN pel_module ON pel_psmt_request_modules.module_id = pel_module.module_id '
                  'WHERE '
-                 'pel_psmt_request.status="'+status+'" AND '              
-                 'pel_module.module_code="'+module_code+'" AND '
-                 'pel_psmt_request.request_date >= "'+ date_from+'" AND pel_psmt_request.request_date <= "'+date_to +'" AND '
-                 'pel_psmt_request.client_login_id="'+company_id +'"')
-    #print(list_querry)                     
+                 'pel_psmt_request.status="'+status+'"'+
+                 ''+module+''+
+                 'AND cast(pel_psmt_request.request_date as date) BETWEEN "'+date_from+'" AND "'+date_to +'" AND '
+                 'pel_psmt_request.client_login_id="'+company_id +'"'
+                )
+    
     module_data = custom_sql(list_querry) 
     return module_data 
 
@@ -115,8 +118,9 @@ def ngo_society_sacco_trust (status,module_code,date_from,date_to,company_id):
             'pel_psmt_request.status="'+status+'" AND ' 
             'pel_module.module_code="'+module_code+'" AND '
             'pel_psmt_request.request_date BETWEEN "'+ date_from+'" AND "'+date_to +'" AND '
-            'pel_psmt_request.client_login_id = "'+company_id +'"') 
-    #print(list_querry)         
+            'pel_psmt_request.client_login_id = "'+company_id +'"'
+            ) 
+         
     module_data = custom_sql(list_querry) 
     return module_data  
 
