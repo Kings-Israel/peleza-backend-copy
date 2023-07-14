@@ -68,7 +68,7 @@ class PSMTRequestSerializer(serializers.ModelSerializer):
         }
 
     def get_dataset_name(self, obj):
-        return obj.bg_dataset_name
+        return obj.dataset_name
 
     def get_percentage(self, obj):
         modules = obj.modules.all()
@@ -134,15 +134,18 @@ class PIDVARequestDetailSerializer(PSMTRequestDetailSerializer):
 class RequestSerializer(serializers.Serializer):
     registration_number = serializers.CharField(required=True)
     package_id = serializers.IntegerField(required=True)
+    client_id = serializers.IntegerField(required=False)
+    client_login_id = serializers.CharField(required=False)
     dataset_name = serializers.CharField(required=True)
     client_number = serializers.CharField(required=True)
     dataset_citizenship = serializers.CharField(required=True)
     request_date = serializers.CharField(default=now().strftime("%d %b %Y %H:%M"))
-
+    request_plan = serializers.CharField(required=False) 
 
     def create(self, validated_data):
         # Perform the necessary steps to create and save the new request
         request = PSMTRequest.objects.create(**validated_data)
+
         # Perform any additional processing or validations if needed
         # Return the created request instance
         return request

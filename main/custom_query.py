@@ -1,12 +1,23 @@
-
+from django.db import connection
+import mysql.connector
 
 def custom_sql(querry):
-    from django.db import connection
+        
+    connection = mysql.connector.connect(
+        host='localhost',
+        user='root',
+        password='1999',
+        database='peleza_db_local'
+    )
+    
     cursor = connection.cursor()
+    #print(cursor)
     # Data retrieval operation - no commit required
     cursor.execute(querry)
     row = cursor.fetchall()
 
+    cursor.close()
+    connection.close()
     return row  
 
 def request_querry (status,module_code,date_from,date_to,company_id):  
@@ -22,43 +33,37 @@ def request_querry (status,module_code,date_from,date_to,company_id):
     else:
      status='00'
 
-    list_querry=('SELECT pel_psmt_request.request_ref_number,'
-                 'pel_psmt_request.bg_dataset_name, '
-                 'pel_psmt_request.request_id, '
-                 'pel_psmt_request.request_plan, '
-                 'pel_psmt_request.dataset_citizenship, '
-                 'pel_psmt_request.bg_dataset_email, '
-                 'pel_psmt_request.bg_dataset_mobile, '
-                 'pel_psmt_request.bg_dataset_idnumber, '
-                 'pel_psmt_request.registration_number, '
-                 'pel_psmt_request.client_number, '
-                 'pel_psmt_request.company_type, '
-                 'pel_psmt_request.dataset_incorporation_no, '
-                 'pel_psmt_request.dataset_kra_pin, '
-                 'pel_psmt_request.request_type, '
-                 'pel_psmt_request.dataset_name, '
-                 'pel_psmt_request.request_package, '
-                 'pel_module.module_code, '
-                 'pel_psmt_request.client_id, '
-                 'pel_psmt_request.client_login_id, '
-                 'pel_psmt_request.client_name, '
-                 'pel_psmt_request.request_date, '
-                 'pel_psmt_request.package_id, '
-                 'pel_psmt_request.verified_date, '
-                 'pel_psmt_request.adverse_status, '
-                 'pel_psmt_request.company_name '         
-                 'FROM '
-                 'pel_psmt_request '
-                 'INNER JOIN pel_psmt_request_modules ON pel_psmt_request_modules.request_ref_number = pel_psmt_request.request_ref_number '
-                 'INNER JOIN pel_module ON pel_psmt_request_modules.module_id = pel_module.module_id '
-                 'WHERE '
-                 'pel_psmt_request.status="'+status+'" AND '              
-                 'pel_module.module_code="'+module_code+'" AND '
-                 'pel_psmt_request.request_date >= "'+ date_from+'" AND pel_psmt_request.request_date <= "'+date_to +'" AND '
-                 'pel_psmt_request.client_login_id="'+company_id +'"')
-    #print(list_querry)                     
+    list_querry = ('SELECT * FROM pel_psmt_request WHERE pel_psmt_request.status="'+status+'" AND pel_psmt_request.request_plan="'+module_code+'" AND pel_psmt_request.request_date >= "'+date_from+'" AND pel_psmt_request.request_date <= "'+date_to+'" AND pel_psmt_request.client_login_id="'+company_id+'"')
+
+    
+
+ 
+    #print(list_querry)           
     module_data = custom_sql(list_querry) 
-    return module_data 
+    #print(module_data)
+    return module_data
+def get_req (status):  
+    "new" if status is None else status
+    if status=='new':
+     status='00'
+    elif status=='complete':
+     status='11'
+    elif status=='in-progress':
+     status='44' 
+    elif status=='interim':
+     status='33'         
+    else:
+     status='00'
+
+    querry = ('SELECT * FROM pel_psmt_request WHERE pel_psmt_request.status="'+status+'"')
+
+    
+
+ 
+    #print(list_querry)           
+    module_data = custom_sql(querry) 
+    #print(module_data)
+    return module_data
 
 def ngo_society_sacco_trust (status,module_code,date_from,date_to,company_id): 
     "new" if status is None else status

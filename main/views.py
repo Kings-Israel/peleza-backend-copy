@@ -288,6 +288,8 @@ def simple_upload(request):
 class PSMTRequestApiView(CreateAPIView):
     serializer_class = RequestSerializer
 
+
+
     def generate_ref_number(self):
         letters = string.ascii_uppercase
         timestamp = datetime.now()
@@ -302,25 +304,34 @@ class PSMTRequestApiView(CreateAPIView):
     def create(self, request, *args, **kwargs):
         instance = self.validate_request()
         request_ref_number = self.generate_ref_number()
-
+        request_plan = request.data.get('req_plan') 
+        
+        client_id = request.user.pk
+        client_login_id = request.user.client_parent_company.company_code if request.user.client_parent_company else "_As_MMM"
         request_thread = RequestHandler(request, request_ref_number)
+
         request_thread.start()
 
         data = {
             **instance.validated_data,
             "request_ref_number": request_ref_number,
+            "request_plan": request_plan, 
             "status": "00",
             "percentage": 0.00,
+            "client_id": client_id,  
+            "client_login_id": client_login_id,
+
         }
 
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
+        
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
-        serializer.save()
+        serializer.save(status="00")
 
 
        
@@ -348,10 +359,13 @@ class PSMTRequestListApiView(ListAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset().prefetch_related("modules")
+        
         q = self.request.GET.get("q", "").strip()
+       
         status = self.request.GET.get("status", "").strip()
-
+        
         company = self.request.user.client_parent_company
+        
 
         extra = {}
         if status == "completed":
@@ -372,26 +386,30 @@ class PSMTRequestListApiView(ListAPIView):
                 **extra
             )[:12]
         else:
+            client_login_id = company.company_code if company else "_As_MMM"
+            client_id=self.request.user.pk
             queryset = queryset.filter(
-                client_login_id=company.company_code if company else "_As_MMM",
-                client_id=self.request.user.pk,
+                client_login_id=client_login_id,
+                
+                client_id=client_id,
                 **extra
             )
+            
 
         queryset: QuerySet = queryset
-
+        
         return queryset
 
-
+   
 class PSMTRequestDetailView(RetrieveAPIView):
     serializer_class = PSMTRequestDetailSerializer
 
     def get_object(self):
         user=self.request.user
         print(user)
-        company_id=getattr(user,'company_id')
+        company_id=getattr(user,'client_company_id')
 
-        company = self.request.user.company
+        company = self.request.user.client_parent_company
         package_id = self.kwargs.get("package_id", 0)
         request_ref_number = self.kwargs.get("request_ref_number", 0)
         company.company_code=company_id
@@ -648,14 +666,18 @@ class PIDVARequestDetailView(RetrieveUpdateAPIView):
 class Stats(ListAPIView):
     def get(self, request, *args, **kwargs):
         user = request.user
-        company = request.user.client_parent_company
+        client_id = user.client_id
+        company_id = user.client_company_id
+        company = user.client_parent_company
+        company_name = user.client_parent_company.company_name
+        
         credits = company.company_credit if company else 0
         packages_id.append(52) 
         #extra_query = {"client_id": user.pk, "package_id__in": packages_id}
         #temporary fix for ncba until we can find a way to read usee company id in login token
         extra_query = {
-        "status__in": ["00", "11"],
-        "company_name": "NCBA",
+        "client_id": client_id,
+        "dataset_name": company_name,
         }
         #print(extra_query)
         new = PSMTRequest.objects.filter(status="00", **extra_query).count()
@@ -669,7 +691,10 @@ class Stats(ListAPIView):
         _recent_requests = PSMTRequest.objects.filter(**extra_query)[
                            :100
                            ].select_related("business")
+
+        
         recent_requests = PSMTRequestSerializer(_recent_requests, many=True)
+       
         
         data = {
             "credits": credits,
@@ -911,10 +936,24 @@ def List(request):
     company_id=getattr(user,'client_company_id')
     
     module_code = request.query_params.get('module_code')
+
+    status = request.query_params.get('status')
     date_from = request.query_params.get('date_from')
     date_to = request.query_params.get('date_to')
+    if date_from == date_to:
+        date_to += ' 23:59:59'  # Set the end time of the day
+    module_data=custom_query.request_querry(status,module_code,date_from,date_to,company_id)  
+    #print(module_data)    
+    return JsonResponse(data=module_data,  safe=False)   
+
+@csrf_exempt
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def Req(request):  
+    user=request.user
     status = request.query_params.get('status')
-    module_data=custom_query.request_querry(status,module_code,date_from,date_to,company_id)      
+    module_data=custom_query.get_req(status)  
+    #print(module_data)    
     return JsonResponse(data=module_data,  safe=False)   
 
 class CountriesList(ListAPIView):

@@ -61,6 +61,10 @@ urlpatterns = [
         views.List
     ),
     path(
+        "req/",
+        views.Req
+    ),
+    path(
         "test_download/",
         views.download_file
     ),
