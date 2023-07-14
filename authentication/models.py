@@ -61,6 +61,8 @@ class PelClient(models.Model):
         blank=True,
         null=True
     )
+    title = models.CharField(max_length=255, blank=True, null=True)
+    
     REQUIRED_FIELDS = ("password", "company_name", "company_id")
     USERNAME_FIELD = "client_login_username"
 

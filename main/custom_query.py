@@ -22,8 +22,8 @@ def request_querry (status,module_code,date_from,date_to,company_id):
     else:
      status='00'
 
-    module = '' if module_code and module_code == '' or module_code == 'all' else 'AND pel_module.module_code="'+module_code+'"'
-
+    module = '' if module_code is None or module_code == '' or module_code == 'all' else 'AND pel_module.module_code="'+module_code+'"'
+    
     list_querry=('SELECT pel_psmt_request.request_ref_number,'
                  'pel_psmt_request.bg_dataset_name, '
                  'pel_psmt_request.request_id, '
@@ -48,7 +48,8 @@ def request_querry (status,module_code,date_from,date_to,company_id):
                  'pel_psmt_request.package_id, '
                  'pel_psmt_request.verified_date, '
                  'pel_psmt_request.adverse_status, '
-                 'pel_psmt_request.company_name '         
+                 'pel_psmt_request.company_name, '
+                 'pel_psmt_request.medium '
                  'FROM '
                  'pel_psmt_request '
                  'INNER JOIN pel_psmt_request_modules ON pel_psmt_request_modules.request_ref_number = pel_psmt_request.request_ref_number '

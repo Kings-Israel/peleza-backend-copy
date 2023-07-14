@@ -116,8 +116,10 @@ def add_user(request):
         phone_number = request.POST.get('phoneNumber','')
         city = request.POST.get('city', '')
         address = request.POST.get('address')
+        postal_code = request.POST.get('postalCode')
         added_by_id = request.POST.get('added_by_id')
         company_id = request.POST.get('company', '')
+        title = request.POST.get('title', '')
         
         try:
            added_by = PelClient.objects.get(client_id=int(added_by_id))
@@ -136,10 +138,12 @@ def add_user(request):
             client_login_username= email,
             client_mobile_number=phone_number,
             client_postal_address=address,
+            client_postal_code=postal_code,
             added_by=added_by,
             client_city=city,
             client_parent_company=client_parent_company,
             client_password=hashlib.md5(get_random_string(length=10).encode()).hexdigest(),
+            title = title
         )
         client.save()
         
