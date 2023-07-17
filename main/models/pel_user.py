@@ -26,6 +26,10 @@ class PelUser(models.Model):
     usr_profile_id = models.CharField(max_length=255, blank=True)
     usr_profile_name = models.CharField(max_length=50, null=True)
     usr_email = models.EmailField(max_length=255, blank=True)
+    usr_biller_id = models.CharField(max_length=255, null=True)
+    usr_date_created = models.DateField(default=timezone.now, null=True)
+    usr_phone_no = models.CharField(max_length=20, blank=True)
+    usr_profile = models.IntegerField(default=1)
 
     class Meta:
         db_table = "pel_users"

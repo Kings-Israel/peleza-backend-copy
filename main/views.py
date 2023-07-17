@@ -65,7 +65,10 @@ packages_id = settings.ALL_API_PACKAGES
 helper = HelperFunctions()
 queue_publisher = rabbit_queue.QueuePublisher()
 from django.utils.crypto import get_random_string
-
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.core.mail import send_mail
 
 
 @csrf_exempt
@@ -131,6 +134,8 @@ def add_user(request):
         except (ValueError, ClientCompany.DoesNotExist):
             return JsonResponse({'message': 'Invalid company'})
         
+        password = get_random_string(length=10)
+        
         client = PelClient(
             client_company_id=client_parent_company.company_code,
             client_first_name=first_name,
@@ -142,7 +147,7 @@ def add_user(request):
             added_by=added_by,
             client_city=city,
             client_parent_company=client_parent_company,
-            client_password=hashlib.md5(get_random_string(length=10).encode()).hexdigest(),
+            client_password=hashlib.md5(password.encode()).hexdigest(),
             title = title
         )
         client.save()
@@ -168,8 +173,30 @@ def add_user(request):
                 )
                 user_permission.save()
 
+        context = {
+            "client_login_id": client_parent_company.company_code,
+            "username": email,
+            "password": password
+        }
 
-     
+        subject = "PELEZA ACCOUNT CREATED"
+        to = email
+        html_content = render_to_string("newUser.html", context)
+        text_content = strip_tags(html_content)
+
+        msg = EmailMultiAlternatives(subject, text_content, to)
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+
+        # response = send_mail(
+        #     "PELEZA ACCOUNT CREATED",
+        #     text_content,
+        #     "peleza@international.com",
+        #     [email, ],
+        #     fail_silently=False,
+        # )
+
+        # print(response)
 
         # Return a JSON response indicating the success or failure of the form submission
         return JsonResponse({'message': 'User added'})

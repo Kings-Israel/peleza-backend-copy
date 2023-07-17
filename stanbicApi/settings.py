@@ -25,13 +25,21 @@ ALLOWED_HOSTS = ["0.0.0.0", "kyc.pidva.africa","localhost", "localhost:3001", "1
 AUTH_USER_MODEL = "authentication.PelClient"
 CORS_ALLOW_ALL_ORIGINS = True
 
+# EMAIL_HOST = config("EMAIL_HOST", 'smtp.mailtrap.io')
+# EMAIL_PORT = config("EMAIL_PORT", 2525)
+# EMAIL_HOST_USER = config("EMAIL_HOST_USER", '73d64b1c06a9e4')
+# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", 'ac938b858998db')
+# EMAIL_USE_SSL = config("EMAIL_USE_SSL", False)
+# EMAIL_USE_TLS = config("EMAIL_USE_TSL", True)
+# DEFAULT_FROM_EMAIL = "Peleza International"
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-EMAIL_HOST = config("EMAIL_HOST", None)
-EMAIL_PORT = config("EMAIL_PORT", 465)
-EMAIL_HOST_USER = config("EMAIL_HOST_USER", None)
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", None)
-EMAIL_USE_SSL = config("EMAIL_USE_SSL", True)
-DEFAULT_FROM_EMAIL = "Peleza International"
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_PORT = '2525'
+EMAIL_HOST_USER = '73d64b1c06a9e4'
+EMAIL_HOST_PASSWORD = 'ac938b858998db'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "peleza@international.org"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 #  File upload configuration
@@ -96,7 +104,8 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": config("DB_NAME", "peleza_db_local"),
         "USER": config("DB_USER", "root"),
-        "PASSWORD": config("DB_PASSWORD", "@newYear123!"),
+        "PASSWORD": config("DB_PASSWORD", ""),
+        # "PASSWORD": config("DB_PASSWORD", "@newYear123!"),
         "PORT": config("DB_PORT", 3306),
         "HOST": config("DB_HOST", "127.0.0.1"),
         'OPTIONS': {
