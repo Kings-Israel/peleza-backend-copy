@@ -61,16 +61,16 @@ class PSMTRequest(models.Model):
     verified_by = models.CharField(max_length=255, null=True)
     adverse_status = models.CharField(max_length=255, null=True)
     final_notify = models.BooleanField(default=False)
-    #
     package = models.ForeignKey("main.Package", models.CASCADE, db_constraint=True)
     negative = models.BooleanField(
         max_length=200, default=False, db_column="callback_url"
     )
+    medium = models.CharField(max_length=20, default="portal")
 
 
     class Meta:
         db_table = "pel_psmt_request"
-        managed = False
+        managed = True
         ordering = ["-pk", "bg_dataset_name"]
 
     def __init__(self, *args, **kwargs) -> None:
@@ -95,7 +95,7 @@ class Module(models.Model):
 
     class Meta:
         db_table = "pel_module"
-        managed = False
+        managed = True
 
     def __str__(self):
         return self.module_name
@@ -122,7 +122,7 @@ class PackageModule(models.Model):
 
     class Meta:
         db_table = "pel_packages_module"
-        managed = False
+        managed = True
 
 
 class BgRequestModule(models.Model):
@@ -149,7 +149,7 @@ class BgRequestModule(models.Model):
 
     class Meta:
         db_table = "pel_psmt_request_modules"
-        managed = False
+        managed = True
 
 
 class Package(models.Model):
@@ -182,4 +182,4 @@ class Package(models.Model):
 
     class Meta:
         db_table = "pel_package"
-        managed = False
+        managed = True

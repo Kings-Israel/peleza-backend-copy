@@ -59,7 +59,7 @@ class BusinessCompanyReg(models.Model):
     class Meta:
         db_table = "pel_company_registration"
         ordering = ["-pk"]
-        managed = False
+        managed = True
 
 
 class Encumbrance(models.Model):
@@ -93,7 +93,7 @@ class Encumbrance(models.Model):
 
     class Meta:
         db_table = "pel_company_encumbrances"
-        managed = False
+        managed = True
 
 
 class EncumbrancePersonsEntitled(models.Model):
@@ -114,6 +114,9 @@ class ShareCapital(models.Model):
     {'name': 'ORDINARY', 'number_of_shares': 1000, 'nominal_value': 100.0}
     """
 
+    number_of_shares = models.CharField(max_length=255, blank=False, null=True)
+    nominal_value = models.CharField(max_length=255, blank=True, null=True)
+    name = models.CharField(max_length=255, blank=True, null=True)
     business = models.ForeignKey(
         "main.BusinessCompanyReg",
         models.CASCADE,
@@ -121,9 +124,6 @@ class ShareCapital(models.Model):
         null=True,
         related_name="share_capital",
     )
-    number_of_shares = models.CharField(max_length=255, blank=False, null=True)
-    nominal_value = models.CharField(max_length=255, blank=True, null=True)
-    name = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         db_table = "pel_company_share_capital"
@@ -179,7 +179,7 @@ class Shares(models.Model):
 
     class Meta:
         db_table = "pel_company_shares_data"
-        managed = False
+        managed = True
 
 
 class CompanyOfficialDetails(models.Model):

@@ -1,8 +1,8 @@
 from authentication.serializers import UserMiniSerializer
 from main.serializers.company import BusinessCompanyRegSerializer
 from rest_framework import serializers
-from main.models.psmt import Package, BgRequestModule, PSMTRequest
-from django.utils.timezone import now
+from main.models.psmt import Package, BgRequestModule, PSMTRequest, Module
+
 
 class PackageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -61,6 +61,7 @@ class PSMTRequestSerializer(serializers.ModelSerializer):
             "client_name",
             "request_dataset_cat",
             "dataset_citizenship",
+            "medium",
         )
         extra_kwargs = {
             "request_ref_number": {"read_only": True},

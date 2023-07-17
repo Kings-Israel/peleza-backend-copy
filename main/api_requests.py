@@ -122,10 +122,10 @@ class RequestHandler(threading.Thread, HelperFunctions):
 
     def run(self) -> None:
         self.post_init()
-        if self.package_id in external_packages:
-            self.get()
-        else:
-            self.create_instance()
+        self.create_instance()
+        # if self.package_id in external_packages:
+        #     self.get()
+        # else:
 
     def post_init(self):
         try:
