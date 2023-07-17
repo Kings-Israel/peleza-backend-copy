@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             name='PelClient',
             fields=[
                 ('client_id', models.AutoField(editable=False, primary_key=True, serialize=False, unique=True)),
-                ('client_company_id', models.CharField(blank=True, max_length=200, null=True)),
+                ('client_company_id', models.CharField(blank=True, max_length=200, null=True, unique=False)),
                 ('client_login_username', models.CharField(blank=True, max_length=200, null=True, unique=True)),
                 ('client_password', models.CharField(max_length=255)),
                 ('status', models.CharField(blank=True, max_length=10, null=True)),

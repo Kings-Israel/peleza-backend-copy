@@ -43,11 +43,23 @@ urlpatterns = [
          "submit-help/",
         views.submit_help
     ),
-
     path(
-        "test2/",
-        views.test2
+        "help-items/",
+        views.HelpListApiView.as_view(),
     ),
+    path(
+        "add-user/",
+        views.add_user
+    ),
+    path(
+         "get-add-users/",
+          views.UserListAPIView.as_view(),
+    ),
+
+    # path(
+    #     "test2/",
+    #     views.test2
+    # ),
     path(
         "list/",
         views.List

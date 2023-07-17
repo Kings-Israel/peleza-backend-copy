@@ -3,6 +3,7 @@ from django.db import models
 from django.http import request
 from django.views.decorators.csrf import requires_csrf_token
 from rest_framework import serializers
+from main.models import user_has_permission
 
 
 class AuthSerializer(serializers.Serializer):
@@ -24,7 +25,6 @@ class UserMiniSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    company = ClientCompanySerializer()
 
     class Meta:
         fields = "__all__"

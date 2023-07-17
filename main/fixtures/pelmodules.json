@@ -1,0 +1,1275 @@
+[
+  {
+    "model": "main.Module",
+    "pk" : 1,
+    "fields" : {
+      "module_id": 1,
+      "module_name": "HIGHEST EDUCATION VERIFICATION",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "HED",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "VARIED",
+      "module_role": "educationcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 2,
+    "fields" : {
+      "module_id": 27,
+      "module_name": "PAST 7 YEARS EMPLOYMENT VERIFICATION",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "EMP",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "VARIED",
+      "module_role": "employementcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 3,
+    "fields" : {
+      "module_id": 28,
+      "module_name": "GAP ANALYSIS",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "GAP",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "VARIED",
+      "module_role": "gapanalysischeck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 4,
+    "fields" : {
+      "module_id": 29,
+      "module_name": "PROFESSIONAL LICENSE VERIFICATION",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "PROF LIC",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "profflicenseverificationcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 5,
+    "fields" : {
+      "module_id": 30,
+      "module_name": "PROFESSIONAL MEMBERSHIP VERIFICATION",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "PROF MEMB",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "proffmemberverificationcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 6,
+    "fields" : {
+      "module_id": 31,
+      "module_name": "GLOBAL TERRORIST WATCHLIST CHECK-COMPANY",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "GLOB WATCH COMPANY",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "watchlistcompanycheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 7,
+    "fields" : {
+      "module_id": 32,
+      "module_name": "NATIONAL CRIMINAL DATABASES SEARCH",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "CRIMINAL",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "criminalcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 8,
+    "fields" : {
+      "module_id": 33,
+      "module_name": "NATIONAL IDENTITY CHECK- KENYA",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "NATIONAL IDENTITY",
+      "module_parent": "IDENTITY CHECK",
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "identitycheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 9,
+    "fields" : {
+      "module_id": 34,
+      "module_name": "SOCIAL MEDIA CHECK",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "SMC",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "socialmediacheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 10,
+    "fields" : {
+      "module_id": 35,
+      "module_name": "RESIDENCY/ ADDRESS CHECK",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "ADDRESS",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "VARIED",
+      "module_role": "residencycheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 11,
+    "fields" : {
+      "module_id": 36,
+      "module_name": "SITE VISIT",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "SITE ",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "VARIED",
+      "module_role": "sitevisitcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 12,
+    "fields" : {
+      "module_id": 37,
+      "module_name": "PASSPORT CHECK ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "PASSPORT",
+      "module_parent": "IDENTITY CHECK",
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "passportcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 13,
+    "fields" : {
+      "module_id": 38,
+      "module_name": "CREDIT CHECK- KENYA",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "CREDIT",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "creditcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 14,
+    "fields" : {
+      "module_id": 39,
+      "module_name": "TAX COMPLIANCE CHECK",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "TCC",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "taxcompliancecheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 15,
+    "fields" : {
+      "module_id": 40,
+      "module_name": "DRIVING LICENSE VERIFICATION",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "DLV",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "drivinglicensecheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 16,
+    "fields" : {
+      "module_id": 41,
+      "module_name": "PSV LICENSE VERIFICATIONS",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "PSV",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "psvlicensecheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 17,
+    "fields" : {
+      "module_id": 42,
+      "module_name": "CUSTOMER REFERENCE CHECKING",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "CRC",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "VARIED",
+      "module_role": "customerrefcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 18,
+    "fields" : {
+      "module_id": 43,
+      "module_name": "FINGERPRINT ANALYSIS ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "FPA",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "fingerprintcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 19,
+    "fields" : {
+      "module_id": 44,
+      "module_name": "SHAREHOLDING & DIRECTORSHIP ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "S&D",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "shareholdingcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 20,
+    "fields" : {
+      "module_id": 45,
+      "module_name": "BUSINESS LICENSE COMPLIANCE CHECK ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "BLCC",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "businesslicensecheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 21,
+    "fields" : {
+      "module_id": 47,
+      "module_name": "COMPANY REGISTRATION CHECK",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "CORC",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "companyregcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 22,
+    "fields" : {
+      "module_id": 48,
+      "module_name": "GLOBAL TERRORIST WATCHLIST CHECK-INDIVIDUAL",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "GLOBAL WATCHLIST INDIVIDUAL",
+      "module_parent": null,
+      "module_cost": "5",
+      "cost_review": "FLAT",
+      "module_role": "watchlistindividualcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 23,
+    "fields" : {
+      "module_id": 49,
+      "module_name": "EMPLOYMENT CHECK -CHARACTER REFERENCE ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "ECCR",
+      "module_parent": null,
+      "module_cost": null,
+      "cost_review": "FLAT",
+      "module_role": "employementcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 24,
+    "fields" : {
+      "module_id": 50,
+      "module_name": "EDUCATION VERIFICATION",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "ED CHECK",
+      "module_parent": "000",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": "educationcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 25,
+    "fields" : {
+      "module_id": 51,
+      "module_name": "IDENTITY CHECK",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "ID",
+      "module_parent": null,
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 26,
+    "fields" : {
+      "module_id": 52,
+      "module_name": "COMPREHENSIVE ID CARD VERIFICATION",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "CICV",
+      "module_parent": "IDENTITY CHECK",
+      "module_cost": null,
+      "cost_review": "FLAT",
+      "module_role": "identitycheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 27,
+    "fields" : {
+      "module_id": 55,
+      "module_name": "FINGERPRINT ANALYSIS CHECK",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "FAC",
+      "module_parent": "IDENTITY CHECK",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 28,
+    "fields" : {
+      "module_id": 56,
+      "module_name": "PASSPORT VERIFICATION ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "PV",
+      "module_parent": "IDENTITY CHECK",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 29,
+    "fields" : {
+      "module_id": 58,
+      "module_name": "RESIDENTIAL ADDRESS CHECK ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "RAC",
+      "module_parent": "IDENTITY CHECK",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 30,
+    "fields" : {
+      "module_id": 59,
+      "module_name": "ALIEN REGISTRATION ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "AR",
+      "module_parent": "IDENTITY CHECK",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 31,
+    "fields" : {
+      "module_id": 60,
+      "module_name": "DEGREE CERTIFICATE VERIFICATION ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "DEGCV",
+      "module_parent": "EDUCATION VERIFICATION",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 32,
+    "fields" : {
+      "module_id": 61,
+      "module_name": "MASTERS CERTIFICATE VERIFICATION ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "MCV",
+      "module_parent": "EDUCATION VERIFICATION",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 32,
+    "fields" : {
+      "module_id": 62,
+      "module_name": "DOCTORATE CERTIFICATE VERIFICATION ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "DCV",
+      "module_parent": "EDUCATION VERIFICATION",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 33,
+    "fields" : {
+      "module_id": 63,
+      "module_name": "DIPLOMA CERTIFICATE VERIFICATION ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "DIPCV",
+      "module_parent": "EDUCATION VERIFICATION",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 34,
+    "fields" : {
+      "module_id": 64,
+      "module_name": "PROFESSIONAL CERTIFICATE VERIFICATION ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "PCV",
+      "module_parent": "EDUCATION VERIFICATION",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 35,
+    "fields" : {
+      "module_id": 65,
+      "module_name": "CRIMINAL CHECKS",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "CC",
+      "module_parent": null,
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 36,
+    "fields" : {
+      "module_id": 66,
+      "module_name": "POLICE CLEARANCE CERTIFICATE AUTHENTICITY",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "PCCA",
+      "module_parent": "CRIMINAL CHECKS",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 37,
+    "fields" : {
+      "module_id": 67,
+      "module_name": "COURT RECORDS",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "CR",
+      "module_parent": "CRIMINAL CHECKS",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 38,
+    "fields" : {
+      "module_id": 68,
+      "module_name": "EMPLOYMENT CHECKS ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "EC",
+      "module_parent": null,
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 39,
+    "fields" : {
+      "module_id": 69,
+      "module_name": "EMPLOYMENT CONFIRMATION ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "EMPC",
+      "module_parent": "EMPLOYMENT CHECKS ",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 40,
+    "fields" : {
+      "module_id": 71,
+      "module_name": "CHARACTER REFERENCING ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "CHR",
+      "module_parent": "EMPLOYMENT CHECKS ",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 41,
+    "fields" : {
+      "module_id": 72,
+      "module_name": "EMPLOYMENT PERFORMANCE CONFIRMATION ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "EPC",
+      "module_parent": "EMPLOYMENT CHECKS ",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 42,
+    "fields" : {
+      "module_id": 73,
+      "module_name": "EXECUTIVE EMPLOYMENT CHECK ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "EEC",
+      "module_parent": "EMPLOYMENT CHECKS ",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 43,
+    "fields" : {
+      "module_id": 75,
+      "module_name": "PAYSLIP VALIDATION ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "PAYV",
+      "module_parent": "EMPLOYMENT CHECKS ",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 43,
+    "fields" : {
+      "module_id": 76,
+      "module_name": "GAPS IDENTIFICATION AND ANALYSIS",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "GIA",
+      "module_parent": "EMPLOYMENT CHECKS ",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 44,
+    "fields" : {
+      "module_id": 77,
+      "module_name": "FINANCIAL CHECKS",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "FC",
+      "module_parent": null,
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 45,
+    "fields" : {
+      "module_id": 78,
+      "module_name": "CREDIT INFORMATION CHECK",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "CIC",
+      "module_parent": "FINANCIAL CHECKS",
+      "module_cost": null,
+      "cost_review": "FLAT",
+      "module_role": "creditcheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 46,
+    "fields" : {
+      "module_id": 79,
+      "module_name": "CREDIT INFORMATION + SCORE",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "CIS",
+      "module_parent": "FINANCIAL CHECKS",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 47,
+    "fields" : {
+      "module_id": 80,
+      "module_name": "MOBILE NUMBER VALIDATION ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "MNV",
+      "module_parent": null,
+      "module_cost": null,
+      "cost_review": "FLAT",
+      "module_role": "mobilenumbercheck",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 48,
+    "fields" : {
+      "module_id": 81,
+      "module_name": "DRIVING CHECKS",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "DC",
+      "module_parent": null,
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 49,
+    "fields" : {
+      "module_id": 82,
+      "module_name": "MOTOR VEHICLE OWNERSHIP RECORDS",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "MVOR",
+      "module_parent": "DRIVING CHECKS",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 50,
+    "fields" : {
+      "module_id": 83,
+      "module_name": "TAX PIN VERIFICATION",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "TPV",
+      "module_parent": "TAX COMPLIANCE CHECK",
+      "module_cost": null,
+      "cost_review": "FLAT",
+      "module_role": "taxpinverification",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 51,
+    "fields" : {
+      "module_id": 84,
+      "module_name": "PROFESSIONAL REFERENCES CHECK",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "PRC",
+      "module_parent": "EMPLOYMENT CHECKS ",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 52,
+    "fields" : {
+      "module_id": 85,
+      "module_name": "VEHICLE REGISTRATION CHECK KENYA",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "NTSA",
+      "module_parent": "",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": "ntsa",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 53,
+    "fields" : {
+      "module_id": 86,
+      "module_name": "ENCUMBRANCE CHECK",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "ENCC",
+      "module_parent": null,
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": "encumbrance",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 54,
+    "fields" : {
+      "module_id": 87,
+      "module_name": "KNOW YOUR CUSTOMER",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "KYC",
+      "module_parent": null,
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 55,
+    "fields" : {
+      "module_id": 88,
+      "module_name": "COMPANY SEARCH",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "CO",
+      "module_parent": "KNOW YOUR CUSTOMER",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": "/react/cos",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 56,
+    "fields" : {
+      "module_id": 89,
+      "module_name": "COOPERATIVE SACCOS",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "SACCO",
+      "module_parent": "KNOW YOUR CUSTOMER",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": "/react/cos",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 57,
+    "fields" : {
+      "module_id": 90,
+      "module_name": "SOCIETIES SEARCH",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "SOC",
+      "module_parent": "KNOW YOUR CUSTOMER",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": "/react/cos",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 58,
+    "fields" : {
+      "module_id": 91,
+      "module_name": "LIMITED LIABILITY PARTNERSHIPS",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "LLP",
+      "module_parent": "KNOW YOUR CUSTOMER",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": "/react/cos",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 59,
+    "fields" : {
+      "module_id": 92,
+      "module_name": "COMMUNITY BASED ORGANISATION ",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "CBO",
+      "module_parent": "KNOW YOUR CUSTOMER",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": "/react/cos",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 60,
+    "fields" : {
+      "module_id": 93,
+      "module_name": "BUSINESS SEARCH",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "BN",
+      "module_parent": "KNOW YOUR CUSTOMER",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": "/react/cos",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 61,
+    "fields" : {
+      "module_id": 94,
+      "module_name": "TRUSTS SEARCH",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "TR",
+      "module_parent": "KNOW YOUR CUSTOMER",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": "/react/cos",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 62,
+    "fields" : {
+      "module_id": 95,
+      "module_name": "COMPANY LIMITED BY GUARANTEE",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "CLG",
+      "module_parent": "KNOW YOUR CUSTOMER",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": "/react/cos",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 63,
+    "fields" : {
+      "module_id": 96,
+      "module_name": "INTERNATIONAL COMPANY SEARCH",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "ICO",
+      "module_parent": "KNOW YOUR CUSTOMER",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": "/react/cos",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 64,
+    "fields" : {
+      "module_id": 97,
+      "module_name": "NGO SEARCH",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "NGO",
+      "module_parent": "KNOW YOUR CUSTOMER",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": "/react/cos",
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  },
+  {
+    "model": "main.Module",
+    "pk" : 65,
+    "fields" : {
+      "module_id": 98,
+      "module_name": "SERIAL NUMBER CHECK",
+      "status": "11",
+      "module_date_added": "2023-07-13",
+      "module_added_by": null,
+      "module_verified_by": null,
+      "module_code": "SERIAL NUMBER",
+      "module_parent": "IDENTITY CHECK",
+      "module_cost": null,
+      "cost_review": null,
+      "module_role": null,
+      "module_cost_currency": null,
+      "module_credits": null
+    }
+  }
+]
