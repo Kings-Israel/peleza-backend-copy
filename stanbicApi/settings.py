@@ -104,8 +104,8 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": config("DB_NAME", "peleza_db_local"),
         "USER": config("DB_USER", "root"),
-        "PASSWORD": config("DB_PASSWORD", ""),
-        # "PASSWORD": config("DB_PASSWORD", "@newYear123!"),
+        # "PASSWORD": config("DB_PASSWORD", ""),
+        "PASSWORD": config("DB_PASSWORD", "@newYear123!"),
         "PORT": config("DB_PORT", 3306),
         "HOST": config("DB_HOST", "127.0.0.1"),
         'OPTIONS': {
