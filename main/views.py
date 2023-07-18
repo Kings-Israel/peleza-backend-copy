@@ -662,7 +662,6 @@ class PIDVARequestDetailView(RetrieveUpdateAPIView):
 
 class Stats(ListAPIView):
     def get(self, request, *args, **kwargs):
-        user = request.user
         company = request.user.client_parent_company
         credits = company.company_credit if company else 0
         packages_id.append(52)
@@ -671,7 +670,6 @@ class Stats(ListAPIView):
         final = PSMTRequest.objects.filter(status="11", **extra_query).count()
         invalid = PSMTRequest.objects.filter(status="55", **extra_query).count()
         in_progress = PSMTRequest.objects.filter(Q(status="44") | Q(status="33"), **extra_query).order_by("-request_id").count()
-
 
         _recent_requests = PSMTRequest.objects.filter(**extra_query)[:100].select_related("business")
         recent_requests = PSMTRequestSerializer(_recent_requests, many=True)
@@ -737,7 +735,7 @@ def List(request):
     date_to = request.query_params.get('date_to')
     status = request.query_params.get('status')
     module_data = custom_query.request_querry(status,module_code,date_from,date_to,company_id)
-    return JsonResponse(data=module_data, safe=False)   
+    return JsonResponse(data=module_data, safe=False)
 
 class CountriesList(ListAPIView):
     authentication_classes = []

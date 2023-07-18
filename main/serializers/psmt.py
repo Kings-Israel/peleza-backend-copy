@@ -30,7 +30,7 @@ class PSMTRequestSerializer(serializers.ModelSerializer):
         model = PSMTRequest
         fields = (
             "pk",
-            "request_type",
+            # "request_type",
             "request_package",
             "request_ref_number",
             "registration_number",
