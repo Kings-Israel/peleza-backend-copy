@@ -48,6 +48,14 @@ urlpatterns = [
         views.HelpListApiView.as_view(),
     ),
     path(
+        "help/",
+        views.HelpSubjectApiView.as_view(),
+    ),
+    path(
+        "help/<help_id>/",
+        views.HelpSubjectDetailView.as_view(),
+    ),
+    path(
         "add-user/",
         views.add_user
     ),

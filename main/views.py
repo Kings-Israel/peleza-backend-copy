@@ -6,7 +6,7 @@ from main.models.company import (
     Shares,
     
 )
-from main.models.help import FormData
+from main.models.help import FormData, HelpSubject, HelpMessage, HelpResponse
 
 from authentication.models import PelClient, ClientCompany
 from main.models.permissions import Permissions
@@ -24,7 +24,7 @@ from main.serializers.psmt import (
 from django.core.exceptions import ObjectDoesNotExist
 
 from main.serializers.user import UserSerializer
-from main.serializers.help import HelpSerializer
+from main.serializers.help import HelpSerializer, HelpSubjectSerializer, HelpMessageSerializer, HelpResponseSerializer
 from django.db.models.query import QuerySet
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
@@ -69,6 +69,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.core.mail import send_mail
+from django.utils import timezone
 
 
 @csrf_exempt
@@ -76,27 +77,29 @@ def submit_help(request):
     if request.method == 'POST':
         # Access form data from the request.POST dictionary
         user_id = request.POST.get('userId', None)
-        first_name = request.POST.get('firstName','')
-        last_name = request.POST.get('lastName','')
-        email = request.POST.get('email','')
-        phone_number = request.POST.get('phoneNumber','')
         subject = request.POST.get('subject', '')
         image = request.POST.get('image')
-        message = request.POST.get('message','')
+        message = request.POST.get('message', '')
+        help_id = request.POST.get('help_id', '')
 
-        form_data = FormData(
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            phone_number=phone_number,
-            subject=subject,
-            image = image,
-            message = message,
-            user_id = user_id
-            # Assign values to other fields
-        )
-        form_data.save()
         # Return a JSON response indicating the success or failure of the form submission
+        user = PelClient.objects.get(client_id=user_id)
+        if help_id is None or help_id is '':
+            new_subject = HelpSubject.objects.create(
+                user = user,
+                subject = subject
+            )
+            HelpMessage.objects.create(
+                subject = new_subject,
+                message = message
+            )
+        else:
+            subject = HelpSubject.objects.get(id=help_id)
+            HelpMessage.objects.create(
+                subject = subject,
+                message = message
+            )
+        
         return JsonResponse({'message': 'Form submitted'})
     else:
         # Handle GET requests to the submit-form URL
@@ -109,6 +112,30 @@ class HelpListApiView(ListAPIView):
         user = self.request.user
         return FormData.objects.filter(user_id=user.client_id).order_by('-id')
 
+class HelpSubjectApiView(ListAPIView):
+    serializer_class = HelpSubjectSerializer
+
+    def get_queryset(self):
+        return HelpSubject.objects.filter(user=self.request.user).order_by('-created_at')
+    
+class HelpSubjectDetailView(RetrieveAPIView):
+    serializer_class = HelpSubjectSerializer
+
+    def get_object(self):
+        help_id = self.kwargs.get("help_id", 0)
+
+        obj = get_object_or_404(
+            HelpSubject,
+            id=help_id,
+        )
+
+        for response in obj.responses.filter(read_at=None):
+            response.read_at = timezone.now
+            response.save()
+
+        self.check_object_permissions(self.request, obj)
+        return obj
+    
 @csrf_exempt
 def add_user(request):
     if request.method == 'POST':

@@ -15,3 +15,20 @@ class FormData(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+class HelpSubject(models.Model):
+    user = models.ForeignKey(PelClient, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class HelpMessage(models.Model):
+    subject = models.ForeignKey(HelpSubject, on_delete=models.CASCADE, related_name='messages')
+    message = models.TextField(max_length=1000)
+    read_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class HelpResponse(models.Model):
+    subject = models.ForeignKey(HelpSubject, on_delete=models.CASCADE, related_name='responses')
+    response = models.TextField(max_length=1000)
+    read_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
