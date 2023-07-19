@@ -129,9 +129,9 @@ class HelpSubjectDetailView(RetrieveAPIView):
             id=help_id,
         )
 
-        # for response in obj.responses.filter(read_at=None):
-        #     response.read_at = timezone.now
-        #     response.save()
+        for response in obj.responses.filter(read_at=None):
+            response.read_at = datetime.now()
+            response.save()
 
         self.check_object_permissions(self.request, obj)
         return obj

@@ -28,7 +28,11 @@ class HelpMessageSerializer(serializers.ModelSerializer):
 class HelpSubjectSerializer(serializers.ModelSerializer):
     messages = HelpMessageSerializer(read_only=True, many=True)
     responses = HelpResponseSerializer(read_only=True, many=True)
-    
+    unread_responses = serializers.SerializerMethodField(method_name="get_unread_responses")
+
+    def get_unread_responses(self, obj):
+        return HelpResponse.objects.filter(subject_id=obj.id, read_at=None).count()
+
     class Meta:
         model = HelpSubject
         fields = (
@@ -38,4 +42,5 @@ class HelpSubjectSerializer(serializers.ModelSerializer):
                 "messages",
                 "responses",
                 "created_at",
+                "unread_responses",
             )
