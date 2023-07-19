@@ -2,7 +2,7 @@ from authentication.serializers import UserMiniSerializer
 from main.serializers.company import BusinessCompanyRegSerializer
 from rest_framework import serializers
 from main.models.psmt import Package, BgRequestModule, PSMTRequest, Module
-
+from django.utils.timezone import now
 
 class PackageSerializer(serializers.ModelSerializer):
     class Meta:

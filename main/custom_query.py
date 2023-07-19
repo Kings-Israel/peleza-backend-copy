@@ -1,5 +1,5 @@
 import datetime
-
+import mysql.connector
 def custom_sql(querry):
         
     connection = mysql.connector.connect(
@@ -34,42 +34,8 @@ def request_querry (status,module_code,date_from,date_to,company_id):
 
     module = '' if module_code is None or module_code == '' or module_code == 'all' else 'AND pel_module.module_code="'+module_code+'"'
     
-    list_querry=('SELECT pel_psmt_request.request_ref_number,'
-                 'pel_psmt_request.bg_dataset_name, '
-                 'pel_psmt_request.request_id, '
-                 'pel_psmt_request.request_plan, '
-                 'pel_psmt_request.dataset_citizenship, '
-                 'pel_psmt_request.bg_dataset_email, '
-                 'pel_psmt_request.bg_dataset_mobile, '
-                 'pel_psmt_request.bg_dataset_idnumber, '
-                 'pel_psmt_request.registration_number, '
-                 'pel_psmt_request.client_number, '
-                 'pel_psmt_request.company_type, '
-                 'pel_psmt_request.dataset_incorporation_no, '
-                 'pel_psmt_request.dataset_kra_pin, '
-                 'pel_psmt_request.request_type, '
-                 'pel_psmt_request.dataset_name, '
-                 'pel_psmt_request.request_package, '
-                 'pel_module.module_code, '
-                 'pel_psmt_request.client_id, '
-                 'pel_psmt_request.client_login_id, '
-                 'pel_psmt_request.client_name, '
-                 'pel_psmt_request.request_date, '
-                 'pel_psmt_request.package_id, '
-                 'pel_psmt_request.verified_date, '
-                 'pel_psmt_request.adverse_status, '
-                 'pel_psmt_request.company_name, '
-                 'pel_psmt_request.medium '
-                 'FROM '
-                 'pel_psmt_request '
-                 'INNER JOIN pel_psmt_request_modules ON pel_psmt_request_modules.request_ref_number = pel_psmt_request.request_ref_number '
-                 'INNER JOIN pel_module ON pel_psmt_request_modules.module_id = pel_module.module_id '
-                 'WHERE '
-                 'pel_psmt_request.status="'+status+'"'+
-                 ''+module+''+
-                 'AND cast(pel_psmt_request.request_date as date) BETWEEN "'+date_from+'" AND "'+date_to +'" AND '
-                 'pel_psmt_request.client_login_id="'+company_id +'"'
-                )
+    list_querry = ('SELECT * FROM pel_psmt_request WHERE pel_psmt_request.status="'+status+'" AND pel_psmt_request.request_plan="'+module_code+'" AND pel_psmt_request.request_date >= "'+date_from+'" AND pel_psmt_request.request_date <= "'+date_to+'" AND pel_psmt_request.client_login_id="'+company_id+'"')
+
     
     module_data = custom_sql(list_querry) 
     #print(module_data)

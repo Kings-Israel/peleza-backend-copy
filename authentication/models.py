@@ -123,17 +123,17 @@ class PelClient(models.Model):
     @classmethod
     def register(cls, first_name, last_name, email, mobile_number, password, city, company_id, company):
         user = None
-        client_company = ClientCompany.objects.get(company_id=company_id[0])
+        client_company = ClientCompany.objects.get(company_id=company_id)
         user = cls.objects.create(
-            client_company_id=company[0],
-            client_login_username=email[0],
+            client_company_id=company,
+            client_login_username=email,
             client_password=hashlib.md5(password[0].encode()).hexdigest(),
-            client_first_name=first_name[0],
-            client_last_name=last_name[0],
-            client_mobile_number=mobile_number[0],
+            client_first_name=first_name,
+            client_last_name=last_name,
+            client_mobile_number=mobile_number,
             client_postal_address='8817',
             client_postal_code='00100',
-            client_city=city[0],
+            client_city=city,
             client_parent_company=client_company,
         )
 
