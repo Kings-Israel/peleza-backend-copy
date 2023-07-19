@@ -34,7 +34,7 @@ class PSMTRequestSerializer(serializers.ModelSerializer):
         model = PSMTRequest
         fields = (
             "pk",
-            "request_type",
+            # "request_type",
             "request_package",
             "request_ref_number",
             "registration_number",
@@ -48,9 +48,9 @@ class PSMTRequestSerializer(serializers.ModelSerializer):
             "comments",
             "verified_date",
             "client_id",
-            "client_login_id",
+            # "client_login_id",
             "bg_dataset_name",
-            "company_name",
+            # "company_name",
             "status_date",
             "company_type",
             "client_number",

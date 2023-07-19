@@ -122,6 +122,7 @@ class PelClient(models.Model):
             return user
     @classmethod
     def register(cls, first_name, last_name, email, mobile_number, password, city, company_id, company):
+        print(company)
         user = None
         client_company = ClientCompany.objects.get(company_id=company_id[0])
         user = cls.objects.create(

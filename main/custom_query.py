@@ -9,7 +9,7 @@ def custom_sql(querry):
 
     return row  
 
-def request_querry (status,module_code,date_from,date_to,company_id):  
+def request_querry(status, module_code, date_from, date_to, company_id):  
     "new" if status is None else status
     if status=='new':
      status='00'
@@ -57,8 +57,8 @@ def request_querry (status,module_code,date_from,date_to,company_id):
                  'WHERE '
                  'pel_psmt_request.status="'+status+'"'+
                  ''+module+''+
-                 'AND cast(pel_psmt_request.request_date as date) BETWEEN "'+date_from+'" AND "'+date_to +'" AND '
-                 'pel_psmt_request.client_login_id="'+company_id +'"'
+                 'AND cast(pel_psmt_request.request_date as date) BETWEEN "'+date_from+'" AND "'+date_to+'" AND '
+                 'pel_psmt_request.client_login_id="'+company_id+'"'
                 )
     
     module_data = custom_sql(list_querry) 
